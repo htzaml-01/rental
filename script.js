@@ -274,7 +274,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       message += `\nApakah unit ${car} (${transmission}) masih tersedia untuk jadwal tersebut? Mohon konfirmasinya. Terima kasih.`;
 
-      const targetWA = '6281376385456';
+      const profile = getCompanyProfile();
+      const targetWA = profile.phoneWA || '6281376385456';
       const waUrl = `https://wa.me/${targetWA}?text=${encodeURIComponent(message)}`;
 
       window.open(waUrl, '_blank');
@@ -283,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ========================================================
-  // 7. Admin Panel - Kelola & Tambah Mobil
+  // 7. Render Custom Cars from LocalStorage (Managed via dashboard.html)
   // ========================================================
   const STORAGE_KEY = 'autorent_custom_cars';
 
@@ -297,149 +298,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function saveCustomCars(cars) {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(cars));
-    } catch (err) {
-      console.error('Failed to save custom cars to localStorage', err);
-    }
-  }
-
-  // Admin Modal Elements
-  const adminModal = document.getElementById('adminModal');
-  const btnAdminOpen = document.getElementById('btnAdminOpen');
-  const btnFooterAdmin = document.getElementById('btnFooterAdmin');
-  const adminModalClose = document.getElementById('adminModalClose');
-  const tabBtnAddCar = document.getElementById('tabBtnAddCar');
-  const tabBtnManageCar = document.getElementById('tabBtnManageCar');
-  const tabAddCar = document.getElementById('tabAddCar');
-  const tabManageCar = document.getElementById('tabManageCar');
-  const customCarCount = document.getElementById('customCarCount');
-  const formAddCar = document.getElementById('formAddCar');
-  const adminCarsList = document.getElementById('adminCarsList');
-  const btnClearAllCustomCars = document.getElementById('btnClearAllCustomCars');
-
-  // Image source radio buttons & boxes
-  const imgSrcUpload = document.getElementById('imgSrcUpload');
-  const imgSrcPreset = document.getElementById('imgSrcPreset');
-  const imgSrcUrl = document.getElementById('imgSrcUrl');
-  const boxImgUpload = document.getElementById('boxImgUpload');
-  const boxImgPreset = document.getElementById('boxImgPreset');
-  const boxImgUrl = document.getElementById('boxImgUrl');
-  const adminCarFile = document.getElementById('adminCarFile');
-  const adminCarPreset = document.getElementById('adminCarPreset');
-  const adminCarUrl = document.getElementById('adminCarUrl');
-  const adminImgPreview = document.getElementById('adminImgPreview');
-
-  let currentImageDataUrl = 'Asset/Silver Toyota Avanza Cityscape Showcase.png';
-
-  // Toggle image source
-  function handleImageSourceChange() {
-    if (imgSrcUpload && imgSrcUpload.checked) {
-      boxImgUpload.style.display = 'block';
-      boxImgPreset.style.display = 'none';
-      boxImgUrl.style.display = 'none';
-    } else if (imgSrcPreset && imgSrcPreset.checked) {
-      boxImgUpload.style.display = 'none';
-      boxImgPreset.style.display = 'block';
-      boxImgUrl.style.display = 'none';
-      currentImageDataUrl = adminCarPreset.value;
-      adminImgPreview.src = currentImageDataUrl;
-    } else if (imgSrcUrl && imgSrcUrl.checked) {
-      boxImgUpload.style.display = 'none';
-      boxImgPreset.style.display = 'none';
-      boxImgUrl.style.display = 'block';
-      if (adminCarUrl.value) {
-        currentImageDataUrl = adminCarUrl.value;
-        adminImgPreview.src = currentImageDataUrl;
-      }
-    }
-  }
-
-  if (imgSrcUpload) imgSrcUpload.addEventListener('change', handleImageSourceChange);
-  if (imgSrcPreset) imgSrcPreset.addEventListener('change', handleImageSourceChange);
-  if (imgSrcUrl) imgSrcUrl.addEventListener('change', handleImageSourceChange);
-
-  if (adminCarPreset) {
-    adminCarPreset.addEventListener('change', () => {
-      currentImageDataUrl = adminCarPreset.value;
-      adminImgPreview.src = currentImageDataUrl;
-    });
-  }
-
-  if (adminCarUrl) {
-    adminCarUrl.addEventListener('input', () => {
-      if (adminCarUrl.value.trim()) {
-        currentImageDataUrl = adminCarUrl.value.trim();
-        adminImgPreview.src = currentImageDataUrl;
-      }
-    });
-  }
-
-  if (adminCarFile) {
-    adminCarFile.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          currentImageDataUrl = event.target.result;
-          adminImgPreview.src = currentImageDataUrl;
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-  }
-
-  // Open & Close Admin Modal
-  function openAdminModal() {
-    if (adminModal) {
-      adminModal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      updateManageTabList();
-    }
-  }
-
-  function closeAdminModal() {
-    if (adminModal) {
-      adminModal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-  }
-
-  if (btnAdminOpen) btnAdminOpen.addEventListener('click', openAdminModal);
-  if (btnFooterAdmin) btnFooterAdmin.addEventListener('click', openAdminModal);
-  if (adminModalClose) adminModalClose.addEventListener('click', closeAdminModal);
-
-  if (adminModal) {
-    adminModal.addEventListener('click', (e) => {
-      if (e.target === adminModal) {
-        closeAdminModal();
-      }
-    });
-  }
-
-  // Tab Switching
-  if (tabBtnAddCar && tabBtnManageCar) {
-    tabBtnAddCar.addEventListener('click', () => {
-      tabBtnAddCar.classList.add('active');
-      tabBtnManageCar.classList.remove('active');
-      tabAddCar.style.display = 'block';
-      tabManageCar.style.display = 'none';
-    });
-
-    tabBtnManageCar.addEventListener('click', () => {
-      tabBtnManageCar.classList.add('active');
-      tabBtnAddCar.classList.remove('active');
-      tabAddCar.style.display = 'none';
-      tabManageCar.style.display = 'block';
-      updateManageTabList();
-    });
-  }
-
   // Render Custom Cars to DOM
   function renderAllCustomCars() {
     const customCars = getCustomCars();
-    if (customCarCount) customCarCount.textContent = customCars.length;
 
     // Remove any previously rendered custom cars to avoid duplication
     document.querySelectorAll('.car-card-custom').forEach(el => el.remove());
@@ -459,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       card.innerHTML = `
         <div class="car-thumb">
-          <img src="${car.image}" alt="${car.name}" loading="lazy">
+          <img src="${car.image}" alt="${car.name}" loading="lazy" onerror="this.src='Asset/Silver Toyota Avanza Cityscape Showcase.png'">
           <span class="badge-status">${car.badge || 'Tersedia'}</span>
         </div>
         <div class="car-details">
@@ -508,140 +369,65 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Update Manage Tab List in Admin Modal
-  function updateManageTabList() {
-    const customCars = getCustomCars();
-    if (customCarCount) customCarCount.textContent = customCars.length;
-    if (!adminCarsList) return;
+  // ========================================================
+  // 8. Company Profile & Dynamic Contact Info
+  // ========================================================
+  const PROFILE_KEY = 'autorent_company_profile';
 
-    adminCarsList.innerHTML = '';
+  const DEFAULT_PROFILE = {
+    phoneDisplay: '0813-7638-5456',
+    phoneWA: '6281376385456',
+    email: 'reservasi@autorent.co.id',
+    address: 'Jl. Gatot Subroto No. 88, Jakarta Selatan',
+    operatingHours: 'Buka Setiap Hari 07.00 - 22.00 WIB',
+    brandName: 'AutoRent Indonesia'
+  };
 
-    if (customCars.length === 0) {
-      adminCarsList.innerHTML = `
-        <div class="admin-empty-state">
-          Belum ada mobil tambahan yang dibuat. Silakan gunakan tab <strong>Tambah Mobil Baru</strong> di atas untuk menambahkan mobil ke katalog.
-        </div>
-      `;
-      return;
+  function getCompanyProfile() {
+    try {
+      const data = localStorage.getItem(PROFILE_KEY);
+      return data ? { ...DEFAULT_PROFILE, ...JSON.parse(data) } : DEFAULT_PROFILE;
+    } catch (err) {
+      console.error('Error reading company profile', err);
+      return DEFAULT_PROFILE;
     }
+  }
 
-    customCars.forEach(car => {
-      const item = document.createElement('div');
-      item.className = 'admin-car-item';
+  function applyCompanyProfile() {
+    const profile = getCompanyProfile();
 
-      const formattedPrice = Number(car.price).toLocaleString('id-ID');
+    const phoneEl = document.getElementById('contactPhoneDisplay');
+    const emailEl = document.getElementById('contactEmailDisplay');
+    const addressEl = document.getElementById('contactAddressDisplay');
+    const hoursEl = document.getElementById('contactHoursDisplay');
 
-      item.innerHTML = `
-        <div class="admin-car-item-info">
-          <img src="${car.image}" alt="${car.name}" class="admin-car-thumb">
-          <div class="admin-car-details">
-            <strong>${car.name}</strong>
-            <span>Rp ${formattedPrice} / hari &bull; ${car.transmission} &bull; ${car.category.toUpperCase()}</span>
-          </div>
-        </div>
-        <button type="button" class="btn-delete-car" data-delete-id="${car.id}">Hapus</button>
-      `;
+    if (phoneEl) phoneEl.textContent = profile.phoneDisplay;
+    if (emailEl) {
+      emailEl.textContent = profile.email;
+      emailEl.setAttribute('href', `mailto:${profile.email}`);
+    }
+    if (addressEl) addressEl.textContent = profile.address;
+    if (hoursEl) hoursEl.textContent = profile.operatingHours;
 
-      adminCarsList.appendChild(item);
-    });
-
-    // Attach delete handlers
-    adminCarsList.querySelectorAll('.btn-delete-car').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const idToDelete = btn.getAttribute('data-delete-id');
-        deleteCustomCar(idToDelete);
-      });
+    // Dynamically update all WhatsApp links on the page
+    document.querySelectorAll('.btn-wa-link').forEach(link => {
+      const currentHref = link.getAttribute('href') || '';
+      const textMatch = currentHref.match(/[?&]text=([^&]+)/);
+      const textParam = textMatch ? textMatch[1] : encodeURIComponent('Halo AutoRent, saya ingin sewa mobil');
+      link.setAttribute('href', `https://wa.me/${profile.phoneWA}?text=${textParam}`);
     });
   }
 
-  // Delete single custom car
-  function deleteCustomCar(id) {
-    let customCars = getCustomCars();
-    const carToDelete = customCars.find(c => c.id === id);
-    const carName = carToDelete ? carToDelete.name : 'Mobil';
-
-    customCars = customCars.filter(c => c.id !== id);
-    saveCustomCars(customCars);
-
-    renderAllCustomCars();
-    updateManageTabList();
-
-    showToast(`${carName} berhasil dihapus dari katalog.`, 'success');
-  }
-
-  // Clear all custom cars
-  if (btnClearAllCustomCars) {
-    btnClearAllCustomCars.addEventListener('click', () => {
-      const customCars = getCustomCars();
-      if (customCars.length === 0) {
-        showToast('Tidak ada mobil tambahan untuk dihapus.', 'error');
-        return;
-      }
-
-      if (confirm('Yakin ingin menghapus semua mobil tambahan dari katalog?')) {
-        saveCustomCars([]);
-        renderAllCustomCars();
-        updateManageTabList();
-        showToast('Semua mobil tambahan berhasil dibersihkan.', 'success');
-      }
-    });
-  }
-
-  // Form Add Car Submit
-  if (formAddCar) {
-    formAddCar.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const name = document.getElementById('adminCarName').value.trim();
-      const category = document.getElementById('adminCarCategory').value;
-      const price = parseInt(document.getElementById('adminCarPrice').value, 10);
-      const transmission = document.getElementById('adminCarTransmission').value;
-      const capacity = document.getElementById('adminCarCapacity').value;
-      const badge = document.getElementById('adminCarBadge').value;
-      const desc = document.getElementById('adminCarDesc').value.trim();
-
-      if (!name || isNaN(price) || price <= 0) {
-        showToast('Harap isi nama dan harga mobil dengan benar.', 'error');
-        return;
-      }
-
-      const newCar = {
-        id: 'car_' + Date.now(),
-        name: name,
-        category: category,
-        price: price,
-        transmission: transmission,
-        capacity: capacity,
-        badge: badge,
-        desc: desc,
-        image: currentImageDataUrl || 'Asset/Silver Toyota Avanza Cityscape Showcase.png',
-        createdAt: new Date().toISOString()
-      };
-
-      const customCars = getCustomCars();
-      customCars.unshift(newCar);
-      saveCustomCars(customCars);
-
-      renderAllCustomCars();
-      updateManageTabList();
-
-      showToast(`Mobil ${name} berhasil ditambahkan ke katalog!`, 'success');
-
-      // Reset form
-      formAddCar.reset();
-      currentImageDataUrl = 'Asset/Silver Toyota Avanza Cityscape Showcase.png';
-      adminImgPreview.src = currentImageDataUrl;
-      handleImageSourceChange();
-
-      // Scroll to Armada section so user can see it right away
-      closeAdminModal();
-      const armadaSection = document.getElementById('armada');
-      if (armadaSection) {
-        armadaSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  }
-
-  // Initial render of custom cars on page load
+  // Initial runs
   renderAllCustomCars();
+  applyCompanyProfile();
+
+  // Listen to cross-tab storage changes (if admin edits cars or contact in dashboard.html!)
+  window.addEventListener('storage', (e) => {
+    if (e.key === STORAGE_KEY) {
+      renderAllCustomCars();
+    } else if (e.key === PROFILE_KEY) {
+      applyCompanyProfile();
+    }
+  });
 });

@@ -34,15 +34,15 @@
       </nav>
 
       <div class="nav-actions">
-        <button type="button" class="btn btn-outline btn-admin-trigger" id="btnAdminOpen" title="Kelola Mobil (Admin)">
+        <a href="dashboard.html" class="btn btn-outline btn-admin-trigger" title="Buka Dashboard Admin">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
             <path d="M12 20h9"></path>
             <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
           </svg>
-          <span>Admin</span>
-        </button>
+          <span>Dashboard</span>
+        </a>
         <a href="#armada" class="btn btn-outline">Lihat Mobil</a>
-        <a href="https://wa.me/6281376385456?text=Halo%20AutoRent,%20saya%20ingin%20tanya%20sewa%20mobil" target="_blank" class="btn btn-primary">Sewa Sekarang</a>
+        <a href="https://wa.me/6281376385456?text=Halo%20AutoRent,%20saya%20ingin%20tanya%20sewa%20mobil" target="_blank" class="btn btn-primary btn-wa-link">Sewa Sekarang</a>
         <button class="menu-toggle" id="menuToggle" aria-label="Buka Menu">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -70,7 +70,7 @@
 
           <div class="hero-buttons">
             <a href="#armada" class="btn btn-hero-primary">Lihat Mobil</a>
-            <a href="https://wa.me/6281376385456?text=Halo%20AutoRent,%20saya%20ingin%20sewa%20mobil" target="_blank" class="btn btn-hero-secondary">Sewa Sekarang</a>
+            <a href="https://wa.me/6281376385456?text=Halo%20AutoRent,%20saya%20ingin%20sewa%20mobil" target="_blank" class="btn btn-hero-secondary btn-wa-link">Sewa Sekarang</a>
           </div>
 
           <div class="hero-highlights-hero">
@@ -546,7 +546,7 @@
           <h2 class="cta-title">Siap Memulai Perjalanan Anda Bersama AutoRent?</h2>
           <p class="cta-desc">Konsultasikan kebutuhan armada Anda sekarang juga dengan staf kami. Kami siap memberikan penawaran terbaik dan layanan 24 jam.</p>
           <div class="cta-buttons">
-            <a href="https://wa.me/6281376385456?text=Halo%20AutoRent,%20saya%20ingin%20konsultasi%20sewa%20mobil" target="_blank" class="btn btn-primary btn-lg">Hubungi WhatsApp</a>
+            <a href="https://wa.me/6281376385456?text=Halo%20AutoRent,%20saya%20ingin%20konsultasi%20sewa%20mobil" target="_blank" class="btn btn-primary btn-lg btn-wa-link">Hubungi WhatsApp</a>
             <a href="#armada" class="btn btn-outline-light btn-lg">Cek Ketersediaan Mobil</a>
           </div>
         </div>
@@ -563,9 +563,9 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           </div>
           <div>
-            <h3>Telepon & WhatsApp</h3>
-            <p>0813-7638-5456</p>
-            <span>Respon Cepat 24 Jam</span>
+            <h3>Telepon &amp; WhatsApp</h3>
+            <p id="contactPhoneDisplay">0813-7638-5456</p>
+            <span id="contactPhoneSub">Respon Cepat 24 Jam</span>
           </div>
         </div>
 
@@ -575,8 +575,8 @@
           </div>
           <div>
             <h3>Email Resmi</h3>
-            <p>reservasi@autorent.co.id</p>
-            <span>Layanan Pertanyaan & Kerjasama</span>
+            <p><a id="contactEmailDisplay" href="mailto:reservasi@autorent.co.id" style="color: inherit; text-decoration: none;">reservasi@autorent.co.id</a></p>
+            <span id="contactEmailSub">Layanan Pertanyaan &amp; Kerjasama</span>
           </div>
         </div>
 
@@ -585,9 +585,9 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
           </div>
           <div>
-            <h3>Lokasi Kantor & Pool</h3>
-            <p>Jl. Gatot Subroto No. 88, Jakarta Selatan</p>
-            <span>Buka Setiap Hari 07.00 - 22.00 WIB</span>
+            <h3>Lokasi Kantor &amp; Pool</h3>
+            <p id="contactAddressDisplay">Jl. Gatot Subroto No. 88, Jakarta Selatan</p>
+            <span id="contactHoursDisplay">Buka Setiap Hari 07.00 - 22.00 WIB</span>
           </div>
         </div>
       </div>
@@ -651,7 +651,7 @@
         <div class="footer-bottom-links">
           <a href="#">Kebijakan Privasi</a>
           <a href="#">Syarat Penggunaan</a>
-          <button type="button" class="footer-admin-link" id="btnFooterAdmin">Panel Admin</button>
+          <a href="dashboard.html" class="footer-admin-link">Dashboard Admin</a>
         </div>
       </div>
     </div>
@@ -697,7 +697,7 @@
       <span>Cara Sewa</span>
     </a>
 
-    <a href="https://wa.me/6281376385456?text=Halo%20AutoRent,%20saya%20ingin%20tanya%20sewa%20mobil" target="_blank" class="bottom-nav-item bottom-nav-wa" aria-label="Chat WhatsApp AutoRent">
+    <a href="https://wa.me/6281376385456?text=Halo%20AutoRent,%20saya%20ingin%20tanya%20sewa%20mobil" target="_blank" class="bottom-nav-item bottom-nav-wa btn-wa-link" aria-label="Chat WhatsApp AutoRent">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
       </svg>
@@ -776,153 +776,6 @@
 
           <button type="submit" class="btn btn-primary btn-block btn-lg">Lanjutkan Reservasi ke WhatsApp</button>
         </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- Admin Modal (Kelola Armada Mobil) -->
-  <div class="modal-backdrop" id="adminModal">
-    <div class="modal-dialog modal-dialog-lg">
-      <div class="modal-header">
-        <div class="modal-header-info">
-          <span class="badge-status">Panel Admin</span>
-          <h3 class="modal-title">Kelola Armada Mobil</h3>
-        </div>
-        <button class="modal-close" id="adminModalClose" aria-label="Tutup">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="admin-tabs">
-          <button type="button" class="admin-tab-btn active" id="tabBtnAddCar" data-tab="tabAddCar">Tambah Mobil Baru</button>
-          <button type="button" class="admin-tab-btn" id="tabBtnManageCar" data-tab="tabManageCar">Mobil Tersimpan (<span id="customCarCount">0</span>)</button>
-        </div>
-
-        <!-- Tab 1: Form Tambah Mobil -->
-        <div class="admin-tab-content active" id="tabAddCar">
-          <form id="formAddCar">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="adminCarName">Nama Mobil</label>
-                <input type="text" id="adminCarName" placeholder="Contoh: Toyota Fortuner GR Sport" required>
-              </div>
-              <div class="form-group">
-                <label for="adminCarCategory">Kategori Kendaraan</label>
-                <select id="adminCarCategory" required>
-                  <option value="mpv">MPV Keluarga (7-Seater)</option>
-                  <option value="city">City Car Kompak</option>
-                  <option value="suv">SUV &amp; Premium</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="adminCarPrice">Harga Sewa / 24 Jam (Rp)</label>
-                <input type="number" id="adminCarPrice" placeholder="Contoh: 500000" min="50000" step="10000" required>
-              </div>
-              <div class="form-group">
-                <label for="adminCarTransmission">Opsi Transmisi Bawaan</label>
-                <select id="adminCarTransmission">
-                  <option value="Matic / Manual">Matic / Manual (Bisa Pilih)</option>
-                  <option value="Matic (Automatic)">Matic Saja</option>
-                  <option value="Manual">Manual Saja</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="adminCarCapacity">Kapasitas Penumpang</label>
-                <select id="adminCarCapacity">
-                  <option value="7 Penumpang">7 Penumpang</option>
-                  <option value="5 Penumpang">5 Penumpang</option>
-                  <option value="8 Penumpang">8 Penumpang</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="adminCarBadge">Status Badge</label>
-                <select id="adminCarBadge">
-                  <option value="Tersedia">Tersedia</option>
-                  <option value="Unit Baru">Unit Baru</option>
-                  <option value="Paling Populer">Paling Populer</option>
-                  <option value="Promo Hemat">Promo Hemat</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="adminCarDesc">Deskripsi / Keunggulan Unit</label>
-              <textarea id="adminCarDesc" rows="2" placeholder="Contoh: Mesin bertenaga, kabin senyap, full audio, cocok untuk perjalanan dinas maupun liburan keluarga." required></textarea>
-            </div>
-
-            <!-- Pilihan Gambar -->
-            <div class="form-group">
-              <label>Foto Mobil</label>
-              <div class="image-source-options">
-                <label class="radio-label">
-                  <input type="radio" name="imageSource" value="upload" id="imgSrcUpload" checked>
-                  <span>Upload Foto Sendiri</span>
-                </label>
-                <label class="radio-label">
-                  <input type="radio" name="imageSource" value="preset" id="imgSrcPreset">
-                  <span>Pilih dari Preset Asset</span>
-                </label>
-                <label class="radio-label">
-                  <input type="radio" name="imageSource" value="url" id="imgSrcUrl">
-                  <span>Link / URL Gambar</span>
-                </label>
-              </div>
-
-              <!-- Input Upload -->
-              <div id="boxImgUpload" class="img-input-box">
-                <input type="file" id="adminCarFile" accept="image/*">
-                <small class="helper-text">Pilih foto dari komputer / HP Anda (otomatis diproses &amp; disimpan di browser)</small>
-              </div>
-
-              <!-- Input Preset -->
-              <div id="boxImgPreset" class="img-input-box" style="display: none;">
-                <select id="adminCarPreset">
-                  <option value="Asset/Silver Toyota Avanza Cityscape Showcase.png">Toyota All New Avanza</option>
-                  <option value="Asset/Mitsubishi Xpander Cityscape Showcase.png">Mitsubishi Xpander</option>
-                  <option value="Asset/Silver Suzuki Ertiga City Showcase.png">Suzuki All New Ertiga</option>
-                  <option value="Asset/Silver Daihatsu Xenia Cityscape Showcase.png">Daihatsu All New Xenia</option>
-                  <option value="Asset/Silver Toyota Agya Cityscape Showcase.png">Toyota New Agya</option>
-                  <option value="Asset/Silver Toyota Sigra Cityscape Ad.png">Daihatsu Sigra</option>
-                  <option value="Asset/Modern Car Rental Fleet in Cityscape.png">Banner Armada Kota</option>
-                </select>
-              </div>
-
-              <!-- Input URL -->
-              <div id="boxImgUrl" class="img-input-box" style="display: none;">
-                <input type="url" id="adminCarUrl" placeholder="https://contoh.com/gambar-mobil.jpg">
-              </div>
-
-              <!-- Live Preview -->
-              <div class="admin-preview-container" id="adminImgPreviewContainer">
-                <span>Preview Foto Mobil:</span>
-                <img id="adminImgPreview" src="Asset/Silver Toyota Avanza Cityscape Showcase.png" alt="Preview Mobil">
-              </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-block btn-lg" id="btnSubmitAddCar">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-              Tambahkan Mobil ke Katalog
-            </button>
-          </form>
-        </div>
-
-        <!-- Tab 2: Daftar Mobil Tersimpan -->
-        <div class="admin-tab-content" id="tabManageCar" style="display: none;">
-          <div class="admin-cars-header">
-            <p>Mobil di bawah ini ditambahkan oleh admin dan langsung tampil di halaman armada.</p>
-            <button type="button" class="btn btn-sm btn-outline-danger" id="btnClearAllCustomCars">Hapus Semua Mobil Tambahan</button>
-          </div>
-          <div class="admin-cars-list" id="adminCarsList">
-            <!-- Dynamic list generated by JS -->
-          </div>
-        </div>
       </div>
     </div>
   </div>

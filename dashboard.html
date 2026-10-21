@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Admin - AutoRent Armada</title>
+  <meta name="description" content="Dashboard Admin AutoRent untuk mengelola armada mobil dan menambah unit rental.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=3.1">
+  <link rel="stylesheet" href="dashboard.css?v=1.1">
+</head>
+<body class="dashboard-body">
+
+  <!-- Dashboard Header / Navigation -->
+  <header class="dash-header">
+    <div class="dash-container dash-header-inner">
+      <div class="dash-brand">
+        <a href="dashboard.html" class="brand-logo">
+          <div class="logo-symbol">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <rect x="2" y="7" width="20" height="13" rx="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+          </div>
+          <div class="logo-text">Auto<span>Rent</span></div>
+        </a>
+        <span class="dash-badge">Panel Admin</span>
+      </div>
+
+      <div class="dash-header-actions">
+        <div class="system-status">
+          <span class="status-dot"></span>
+          <span>Sistem Aktif &bull; LocalStorage Sync</span>
+        </div>
+        <a href="index.html" class="btn btn-outline" target="_blank" title="Buka website penyewaan">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          <span>Buka Website</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dashboard Navigation Tabs -->
+  <nav class="dash-tabs-bar">
+    <div class="dash-container dash-tabs-container">
+      <div class="dash-tabs-list" role="tablist">
+        <button type="button" class="dash-tab-btn active" id="tabBtnArmada" data-tab="armada" role="tab" aria-selected="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+            <rect x="3" y="11" width="18" height="6" rx="2"></rect>
+            <circle cx="7" cy="14" r="1.2" fill="currentColor"></circle>
+            <circle cx="17" cy="14" r="1.2" fill="currentColor"></circle>
+            <path d="M5 11l1.5-5a2 2 0 0 1 1.9-1.4h7.2a2 2 0 0 1 1.9 1.4L19 11"></path>
+          </svg>
+          <span>Kelola Armada Mobil</span>
+        </button>
+
+        <button type="button" class="dash-tab-btn" id="tabBtnKontak" data-tab="kontak" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          <span>Pengaturan Kontak &amp; Profil</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Layout -->
+  <main class="dash-main">
+    <div class="dash-container">
+      
+      <!-- ======================================================== -->
+      <!-- PANE 1: KELOLA ARMADA MOBIL                              -->
+      <!-- ======================================================== -->
+      <div class="dash-tab-pane active" id="paneArmada" role="tabpanel">
+        
+        <!-- Welcome Title -->
+        <div class="dash-welcome">
+          <div>
+            <h1 class="dash-title">Manajemen Armada Mobil</h1>
+            <p class="dash-subtitle">Tambahkan unit baru, kelola ketersediaan transmisi matic/manual, dan pantau katalog rental secara realtime.</p>
+          </div>
+          <div class="dash-welcome-action">
+            <a href="#formTambahMobil" class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              <span>Tambah Mobil Baru</span>
+            </a>
+          </div>
+        </div>
+
+      <!-- Stats Metric Cards -->
+      <section class="dash-stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="6" rx="2"></rect>
+              <circle cx="7" cy="14" r="1.2" fill="currentColor"></circle>
+              <circle cx="17" cy="14" r="1.2" fill="currentColor"></circle>
+              <path d="M5 11l1.5-5a2 2 0 0 1 1.9-1.4h7.2a2 2 0 0 1 1.9 1.4L19 11"></path>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Total Armada Katalog</span>
+            <strong class="stat-val" id="statTotalCars">6</strong>
+            <span class="stat-desc">Termasuk unit bawaan &amp; custom</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-emerald">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 20h9"></path>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Mobil Tambahan Admin</span>
+            <strong class="stat-val" id="statCustomCars">0</strong>
+            <span class="stat-desc">Dibuat melalui dashboard</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-amber">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Opsi Transmisi</span>
+            <strong class="stat-val">Matic &amp; Manual</strong>
+            <span class="stat-desc">Tersinkron otomatis ke WhatsApp</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Kategori Unit</span>
+            <strong class="stat-val">3 Tipe</strong>
+            <span class="stat-desc">MPV, City Car &amp; SUV</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Two-Column Workspace -->
+      <div class="dash-workspace-grid">
+        
+        <!-- Left: Form Tambah Mobil Baru -->
+        <section class="dash-card" id="formTambahMobil">
+          <div class="dash-card-header">
+            <div class="dash-card-title-group">
+              <div class="icon-circle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </div>
+              <div>
+                <h2 class="dash-card-title">Tambah Mobil Baru</h2>
+                <p class="dash-card-desc">Isi detail mobil di bawah ini untuk langsung mempublikasikannya ke halaman utama.</p>
+              </div>
+            </div>
+          </div>
+
+          <form id="dashFormAddCar" class="dash-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="carName">Nama Kendaraan</label>
+                <input type="text" id="carName" placeholder="Contoh: Toyota Fortuner GR Sport" required>
+              </div>
+              <div class="form-group">
+                <label for="carCategory">Kategori Kendaraan</label>
+                <select id="carCategory" required>
+                  <option value="mpv">MPV Keluarga (7-Seater)</option>
+                  <option value="city">City Car Kompak</option>
+                  <option value="suv">SUV &amp; Premium</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="carPrice">Harga Sewa / 24 Jam (Rp)</label>
+                <input type="number" id="carPrice" placeholder="Contoh: 550000" min="50000" step="10000" required>
+              </div>
+              <div class="form-group">
+                <label for="carTransmission">Pilihan Transmisi</label>
+                <select id="carTransmission">
+                  <option value="Matic / Manual">Matic / Manual (Bisa Pilih Keduanya)</option>
+                  <option value="Matic (Automatic)">Matic (Automatic) Saja</option>
+                  <option value="Manual">Manual Saja</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="carCapacity">Kapasitas Penumpang</label>
+                <select id="carCapacity">
+                  <option value="7 Penumpang">7 Penumpang</option>
+                  <option value="5 Penumpang">5 Penumpang</option>
+                  <option value="8 Penumpang">8 Penumpang</option>
+                  <option value="4 Penumpang">4 Penumpang</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="carBadge">Status Label Badge</label>
+                <select id="carBadge">
+                  <option value="Tersedia">Tersedia</option>
+                  <option value="Unit Baru">Unit Baru</option>
+                  <option value="Paling Populer">Paling Populer</option>
+                  <option value="Promo Hemat">Promo Hemat</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="carDesc">Deskripsi &amp; Keunggulan Mobil</label>
+              <textarea id="carDesc" rows="3" placeholder="Contoh: Suspensi empuk, kabin senyap dan luas, bertenaga untuk perjalanan luar kota maupun keluarga." required></textarea>
+            </div>
+
+            <!-- Upload / Image Selection -->
+            <div class="form-group">
+              <label>Sumber Foto Mobil</label>
+              <div class="dash-img-tabs">
+                <label class="dash-radio-label">
+                  <input type="radio" name="dashImgSource" value="upload" id="dashImgSrcUpload" checked>
+                  <span>Upload dari Komputer / HP</span>
+                </label>
+                <label class="dash-radio-label">
+                  <input type="radio" name="dashImgSource" value="preset" id="dashImgSrcPreset">
+                  <span>Pilih Preset Asset</span>
+                </label>
+                <label class="dash-radio-label">
+                  <input type="radio" name="dashImgSource" value="url" id="dashImgSrcUrl">
+                  <span>URL Gambar Luar</span>
+                </label>
+              </div>
+
+              <!-- Upload File Box -->
+              <div id="dashBoxUpload" class="dash-img-box">
+                <div class="upload-dropzone" id="uploadDropzone">
+                  <input type="file" id="dashCarFileInput" accept="image/*">
+                  <div class="dropzone-text">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                      <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    <span>Klik atau seret foto mobil ke sini (JPG, PNG, WebP)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Preset Box -->
+              <div id="dashBoxPreset" class="dash-img-box" style="display: none;">
+                <select id="dashCarPresetSelect">
+                  <option value="Asset/Silver Toyota Avanza Cityscape Showcase.png">Toyota All New Avanza</option>
+                  <option value="Asset/Mitsubishi Xpander Cityscape Showcase.png">Mitsubishi Xpander</option>
+                  <option value="Asset/Silver Suzuki Ertiga City Showcase.png">Suzuki All New Ertiga</option>
+                  <option value="Asset/Silver Daihatsu Xenia Cityscape Showcase.png">Daihatsu All New Xenia</option>
+                  <option value="Asset/Silver Toyota Agya Cityscape Showcase.png">Toyota New Agya</option>
+                  <option value="Asset/Silver Toyota Sigra Cityscape Ad.png">Daihatsu Sigra</option>
+                  <option value="Asset/Modern Car Rental Fleet in Cityscape.png">Banner Armada Kota</option>
+                </select>
+              </div>
+
+              <!-- URL Box -->
+              <div id="dashBoxUrl" class="dash-img-box" style="display: none;">
+                <input type="url" id="dashCarUrlInput" placeholder="https://domain.com/foto-mobil.jpg">
+              </div>
+
+              <!-- Live Preview Box -->
+              <div class="dash-preview-box">
+                <div class="preview-header">
+                  <span>Preview Foto Mobil:</span>
+                  <span id="previewDimensions" class="badge-dim">Auto Size</span>
+                </div>
+                <div class="preview-frame">
+                  <img id="dashImgPreview" src="Asset/Silver Toyota Avanza Cityscape Showcase.png" alt="Preview Mobil">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-action-group">
+              <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnSubmitCar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                  <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                  <polyline points="7 3 7 8 15 8"></polyline>
+                </svg>
+                <span>Simpan &amp; Publikasikan Mobil</span>
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Right: Daftar Armada Mobil & Manajemen -->
+        <section class="dash-card">
+          <div class="dash-card-header dash-card-header-split">
+            <div class="dash-card-title-group">
+              <div class="icon-circle icon-circle-gray">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+              </div>
+              <div>
+                <h2 class="dash-card-title">Daftar Armada Terdaftar</h2>
+                <p class="dash-card-desc">Semua mobil yang sedang tampil di halaman penyewaan AutoRent.</p>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-sm btn-outline-danger" id="btnResetCustomCars" title="Hapus semua mobil buatan admin">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+              <span>Reset Mobil Custom</span>
+            </button>
+          </div>
+
+          <!-- Filter & Search Controls -->
+          <div class="dash-table-controls">
+            <div class="dash-search-input">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="dashSearchFilter" placeholder="Cari nama mobil...">
+            </div>
+
+            <div class="dash-filter-group" id="dashFilterCategory">
+              <button type="button" class="dash-chip active" data-filter="all">Semua</button>
+              <button type="button" class="dash-chip" data-filter="mpv">MPV</button>
+              <button type="button" class="dash-chip" data-filter="city">City Car</button>
+              <button type="button" class="dash-chip" data-filter="suv">SUV</button>
+            </div>
+          </div>
+
+          <!-- Table Container -->
+          <div class="table-responsive">
+            <table class="dash-table" id="dashCarsTable">
+              <thead>
+                <tr>
+                  <th>Foto</th>
+                  <th>Nama Unit &amp; Kategori</th>
+                  <th>Transmisi</th>
+                  <th>Harga / 24 Jam</th>
+                  <th>Status</th>
+                  <th>Tipe</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="dashCarsTableBody">
+                <!-- Dynamically rendered by dashboard.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        </div>
+      </div>
+      <!-- END PANE 1 -->
+
+      <!-- ======================================================== -->
+      <!-- PANE 2: PENGATURAN KONTAK & PROFIL BISNIS                -->
+      <!-- ======================================================== -->
+      <div class="dash-tab-pane" id="paneKontak" role="tabpanel" style="display: none;">
+        
+        <!-- Welcome Title -->
+        <div class="dash-welcome">
+          <div>
+            <h1 class="dash-title">Pengaturan Kontak &amp; Profil</h1>
+            <p class="dash-subtitle">Kelola nomor WhatsApp admin tujuan pemesanan, alamat kantor/pool armada, email resmi, dan jam layanan.</p>
+          </div>
+          <div class="dash-welcome-action">
+            <button type="button" class="btn btn-outline" id="btnResetProfileToDefault" title="Kembalikan semua kontak ke data bawaan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+                <polyline points="1 4 1 10 7 10"></polyline>
+                <polyline points="23 20 23 14 17 14"></polyline>
+                <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+              </svg>
+              <span>Reset ke Default</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Info Sync Notice -->
+        <div class="dash-notice-box">
+          <div class="notice-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          </div>
+          <div class="notice-content">
+            <strong>Sinkronisasi Realtime ke Website Utama</strong>
+            <p>Setiap perubahan nomor WhatsApp, alamat, dan email yang Anda simpan akan langsung aktif di seluruh tombol reservasi mobil, tombol WhatsApp navbar, dan bagian kontak halaman <code>index.html</code> secara instan tanpa perlu memuat ulang.</p>
+          </div>
+        </div>
+
+        <!-- Two Column Layout: Form & Live Preview -->
+        <div class="dash-workspace-grid">
+          
+          <!-- Left: Contact Form -->
+          <section class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title-group">
+                <div class="icon-circle">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="dash-card-title">Edit Kontak &amp; Lokasi Pool</h2>
+                  <p class="dash-card-desc">Perbarui kontak tujuan pemesanan unit mobil AutoRent.</p>
+                </div>
+              </div>
+            </div>
+
+            <form id="dashFormProfile" class="dash-form">
+              <!-- WhatsApp Admin Target -->
+              <div class="form-group">
+                <label for="profilePhoneWA">
+                  Nomor WhatsApp Admin (Tujuan Reservasi &amp; Chat)
+                  <span class="required-star">*</span>
+                </label>
+                <div class="input-with-prefix">
+                  <span class="input-prefix-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                  </span>
+                  <input type="text" id="profilePhoneWA" placeholder="Contoh: 0813-7638-5456 atau 08123456789" required>
+                </div>
+                <div class="form-hint-box">
+                  <span class="hint-text">Tautan wa.me tujuan:</span>
+                  <code class="hint-code" id="previewWaLinkCode">https://wa.me/6281376385456</code>
+                </div>
+              </div>
+
+              <!-- Phone Display Text -->
+              <div class="form-group">
+                <label for="profilePhoneDisplay">Format Teks Nomor Telepon (Tampilan Layar)</label>
+                <input type="text" id="profilePhoneDisplay" placeholder="Contoh: 0813-7638-5456" required>
+                <span class="form-field-hint">Format teks yang akan dibaca oleh pengunjung website pada kartu kontak.</span>
+              </div>
+
+              <!-- Office / Pool Location -->
+              <div class="form-group">
+                <label for="profileAddress">
+                  Alamat Kantor &amp; Lokasi Pool Mobil
+                  <span class="required-star">*</span>
+                </label>
+                <textarea id="profileAddress" rows="3" placeholder="Contoh: Jl. Gatot Subroto No. 88, Jakarta Selatan" required></textarea>
+                <span class="form-field-hint">Alamat lengkap fisik pool mobil untuk penyerahan atau penjemputan unit rental.</span>
+              </div>
+
+              <!-- Official Email -->
+              <div class="form-group">
+                <label for="profileEmail">
+                  Email Resmi Rental
+                  <span class="required-star">*</span>
+                </label>
+                <div class="input-with-prefix">
+                  <span class="input-prefix-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                      <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                  </span>
+                  <input type="email" id="profileEmail" placeholder="Contoh: reservasi@autorent.co.id" required>
+                </div>
+                <span class="form-field-hint">Tautan mailto: di website utama akan otomatis mengarah ke email ini.</span>
+              </div>
+
+              <div class="form-row">
+                <!-- Operating Hours -->
+                <div class="form-group">
+                  <label for="profileHours">Jam Layanan &amp; Operasional</label>
+                  <input type="text" id="profileHours" placeholder="Contoh: Buka Setiap Hari 07.00 - 22.00 WIB" required>
+                </div>
+
+                <!-- Brand Name -->
+                <div class="form-group">
+                  <label for="profileBrandName">Nama Brand / Perusahaan</label>
+                  <input type="text" id="profileBrandName" placeholder="Contoh: AutoRent Indonesia" required>
+                </div>
+              </div>
+
+              <div class="form-action-group">
+                <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnSaveProfile">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                  </svg>
+                  <span>Simpan Perubahan Kontak &amp; Profil</span>
+                </button>
+              </div>
+            </form>
+          </section>
+
+          <!-- Right: Live Contact Preview & Testing -->
+          <section class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title-group">
+                <div class="icon-circle icon-circle-gray">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon points="12 8 8 12 12 16 12 8"></polygon>
+                    <line x1="16" y1="12" x2="12" y2="12"></line>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="dash-card-title">Live Preview Tampilan Website</h2>
+                  <p class="dash-card-desc">Simulasi tampilan kontak dan uji coba tautan WhatsApp langsung.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="dash-preview-content">
+              
+              <!-- WhatsApp Card Preview -->
+              <div class="preview-contact-item">
+                <div class="preview-item-icon preview-icon-wa">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                </div>
+                <div class="preview-item-info">
+                  <span class="preview-item-label">Telepon &amp; WhatsApp Reservasi:</span>
+                  <strong class="preview-item-val" id="livePreviewPhone">0813-7638-5456</strong>
+                  <span class="preview-item-sub" id="livePreviewPhoneWA">Target Link: wa.me/6281376385456</span>
+                </div>
+                <div class="preview-item-action">
+                  <a href="https://wa.me/6281376385456?text=Halo%20Admin%20AutoRent,%20tes%20koneksi%20dari%20dashboard" target="_blank" class="btn btn-sm btn-primary" id="btnTestWA" title="Uji coba buka WhatsApp ke nomor tujuan">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                    <span>Tes Tautan WhatsApp</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Location / Address Card Preview -->
+              <div class="preview-contact-item">
+                <div class="preview-item-icon preview-icon-map">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                </div>
+                <div class="preview-item-info">
+                  <span class="preview-item-label">Alamat Kantor &amp; Pool Armada:</span>
+                  <strong class="preview-item-val" id="livePreviewAddress">Jl. Gatot Subroto No. 88, Jakarta Selatan</strong>
+                  <span class="preview-item-sub" id="livePreviewHours">Buka Setiap Hari 07.00 - 22.00 WIB</span>
+                </div>
+              </div>
+
+              <!-- Email Card Preview -->
+              <div class="preview-contact-item">
+                <div class="preview-item-icon preview-icon-email">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                </div>
+                <div class="preview-item-info">
+                  <span class="preview-item-label">Email Resmi Rental:</span>
+                  <strong class="preview-item-val" id="livePreviewEmail">reservasi@autorent.co.id</strong>
+                  <span class="preview-item-sub">Layanan Pertanyaan &amp; Kerjasama Bisnis</span>
+                </div>
+              </div>
+
+              <!-- Integration Checklist -->
+              <div class="preview-summary-box">
+                <h4 class="summary-box-title">Area yang Otomatis Terhubung:</h4>
+                <ul class="summary-checklist">
+                  <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span><strong>Formulir Pemesanan Modal:</strong> Pilihan transmisi (matic/manual) dan detail durasi sewa langsung dikirim ke WhatsApp tujuan ini.</span>
+                  </li>
+                  <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span><strong>Tombol Sewa Navbar &amp; Hero CTA:</strong> Link 'Sewa Sekarang' langsung terarah ke nomor baru.</span>
+                  </li>
+                  <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span><strong>Navigasi Bawah Mobile (Bottom Nav):</strong> Tombol Chat WA di HP langsung terhubung ke nomor admin.</span>
+                  </li>
+                  <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span><strong>Kartu Kontak &amp; Lokasi:</strong> Alamat pool, email resmi, dan jam layanan langsung diperbarui.</span>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </section>
+
+        </div>
+      </div>
+      <!-- END PANE 2 -->
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="dash-footer">
+    <div class="dash-container dash-footer-inner">
+      <p>&copy; 2026 AutoRent Indonesia &bull; Panel Admin Armada</p>
+      <div class="dash-footer-links">
+        <a href="index.html">Halaman Utama</a>
+        <a href="index.html#armada">Lihat Katalog</a>
+        <a href="index.html#kontak">Kontak Kami</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="dashboard.js?v=1.1"></script>
+</body>
+</html>
