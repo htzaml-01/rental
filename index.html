@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoRent - Rental Mobil Murah & Terpercaya</title>
+  <meta name="description" content="Layanan rental mobil lepas kunci dan dengan sopir terpercaya. Unit bersih, terawat, dan harga bersahabat.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=3.1">
+</head>
+<body>
+
+  <!-- Main Navigation -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-content">
+      <a href="#" class="brand-logo">
+        <div class="logo-symbol">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <rect x="2" y="7" width="20" height="13" rx="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+        </div>
+        <div class="logo-text">Auto<span>Rent</span></div>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#beranda" class="active">Beranda</a>
+        <a href="#armada">Armada Mobil</a>
+        <a href="#keunggulan">Keunggulan</a>
+        <a href="#cara-sewa">Cara Sewa</a>
+        <a href="#kontak">Kontak</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button type="button" class="btn btn-outline btn-admin-trigger" id="btnAdminOpen" title="Kelola Mobil (Admin)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+          </svg>
+          <span>Admin</span>
+        </button>
+        <a href="#armada" class="btn btn-outline">Lihat Mobil</a>
+        <a href="https://wa.me/6281376385456?text=Halo%20AutoRent,%20saya%20ingin%20tanya%20sewa%20mobil" target="_blank" class="btn btn-primary">Sewa Sekarang</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Buka Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section (DriveNest Clean White Design) -->
+  <section class="hero-bg" id="beranda">
+    <img src="Asset/Modern Car Rental Fleet in Cityscape.png" alt="Fleet Cars" class="hero-car-img">
+    <div class="hero-overlay">
+      <div class="hero-container">
+        <div class="hero-content-left">
+          <h1 class="hero-title-hero">
+            <span class="hero-title-line">Temukan Mobil Pilihan</span>
+            <span class="hero-title-line">Wujudkan Perjalanan <span>Impian</span></span>
+          </h1>
+          <p class="hero-desc-hero">
+            Layanan sewa mobil terpercaya dengan unit bersih, prima, dan nyaman. Harga bersahabat, proses cepat, siap lepas kunci atau dengan sopir.
+          </p>
+
+          <div class="hero-buttons">
+            <a href="#armada" class="btn btn-hero-primary">Lihat Mobil</a>
+            <a href="https://wa.me/6281376385456?text=Halo%20AutoRent,%20saya%20ingin%20sewa%20mobil" target="_blank" class="btn btn-hero-secondary">Sewa Sekarang</a>
+          </div>
+
+          <div class="hero-highlights-hero">
+            <div class="highlight-item-hero">
+              <div class="highlight-icon-hero">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 11l1.5-5a2 2 0 0 1 1.9-1.4h7.2a2 2 0 0 1 1.9 1.4L19 11"></path>
+                  <rect x="3" y="11" width="18" height="6" rx="2"></rect>
+                  <circle cx="7" cy="14" r="1.2" fill="currentColor"></circle>
+                  <circle cx="17" cy="14" r="1.2" fill="currentColor"></circle>
+                  <path d="M5 17v2a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-2"></path>
+                  <path d="M16 17v2a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-2"></path>
+                </svg>
+              </div>
+              <div class="highlight-text-hero">
+                <strong>Unit Terawat</strong>
+                <span>Bersih &amp; Prima</span>
+              </div>
+            </div>
+
+            <div class="highlight-item-hero">
+              <div class="highlight-icon-hero">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="m16 11 2 2 4-4"></path>
+                </svg>
+              </div>
+              <div class="highlight-text-hero">
+                <strong>Terpercaya</strong>
+                <span>Layanan Ramah &amp; Cepat</span>
+              </div>
+            </div>
+
+            <div class="highlight-item-hero">
+              <div class="highlight-icon-hero">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path>
+                  <path d="m9 12 2 2 4-4"></path>
+                </svg>
+              </div>
+              <div class="highlight-text-hero">
+                <strong>Harga Terbaik</strong>
+                <span>Jujur &amp; Transparan</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-mobile-image">
+            <img src="Asset/Modern Car Rental Fleet in Cityscape.png" alt="Fleet Cars in Cityscape">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Search / Booking Filter Bar -->
+  <section class="search-section">
+    <div class="container">
+      <div class="search-card">
+        <div class="search-form" id="searchForm">
+          <div class="form-group">
+            <label for="carCategory">Tipe Mobil</label>
+            <div class="input-with-icon">
+              <select id="carCategory">
+                <option value="all">Semua Tipe Kendaraan</option>
+                <option value="mpv">MPV Keluarga</option>
+                <option value="city">City Car Kompak</option>
+                <option value="suv">SUV &amp; Premium</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="rentalType">Opsi Layanan</label>
+            <div class="input-with-icon">
+              <select id="rentalType">
+                <option value="lepas-kunci">Lepas Kunci (Setir Sendiri)</option>
+                <option value="dengan-sopir">Dengan Sopir Profesional</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="pickupDate">Tanggal Mulai</label>
+            <div class="input-with-icon">
+              <input type="date" id="pickupDate">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="rentalDuration">Durasi Sewa</label>
+            <div class="input-with-icon">
+              <select id="rentalDuration">
+                <option value="1">1 Hari (24 Jam)</option>
+                <option value="2">2 Hari</option>
+                <option value="3">3 Hari</option>
+                <option value="7">1 Minggu</option>
+                <option value="30">1 Bulan</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-action">
+            <button type="button" id="btnFilterSubmit" class="btn btn-primary btn-block">Cari Mobil</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cars Showcase Section -->
+  <section class="fleet-section" id="armada">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <span class="section-tag">Pilihan Terbaik</span>
+          <h2 class="section-title">Armada Mobil Unggulan</h2>
+          <p class="section-subtitle">Seluruh unit terawat rapi, bersih, mesin sehat, dan siap menemani perjalanan Anda.</p>
+        </div>
+        <div class="fleet-filter-pills" id="fleetFilterPills">
+          <button class="pill active" data-filter="all">Semua Mobil</button>
+          <button class="pill" data-filter="mpv">MPV 7-Seater</button>
+          <button class="pill" data-filter="city">City Car</button>
+          <button class="pill" data-filter="suv">SUV &amp; Premium</button>
+        </div>
+      </div>
+
+      <div class="car-grid" id="carGrid">
+        <!-- Mitsubishi Xpander -->
+        <article class="car-card" data-category="mpv">
+          <div class="car-thumb">
+            <img src="Asset/Mitsubishi Xpander Cityscape Showcase.png" alt="Mitsubishi Xpander" loading="lazy">
+            <span class="badge-status">Tersedia</span>
+          </div>
+          <div class="car-details">
+            <div class="car-category-label">MPV Keluarga</div>
+            <h3 class="car-name">Mitsubishi Xpander</h3>
+            <p class="car-caption">Desain futuristik, kabin senyap, dan suspensi nyaman untuk perjalanan keluarga.</p>
+            
+            <div class="car-specs">
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <span>7 Penumpang</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+                <span>Matic / Manual</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                <span>Bensin Irit</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span>Double Blower AC</span>
+              </div>
+            </div>
+
+            <div class="car-footer">
+              <div class="car-price">
+                <span class="price-val">Rp 450.000</span>
+                <span class="price-unit">/ 24 jam</span>
+              </div>
+              <button class="btn btn-primary btn-sm btn-book" data-car="Mitsubishi Xpander" data-price="450.000">Pesan Unit</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Toyota Avanza -->
+        <article class="car-card" data-category="mpv">
+          <div class="car-thumb">
+            <img src="Asset/Silver Toyota Avanza Cityscape Showcase.png" alt="Toyota All New Avanza" loading="lazy">
+            <span class="badge-status">Paling Populer</span>
+          </div>
+          <div class="car-details">
+            <div class="car-category-label">MPV Keluarga</div>
+            <h3 class="car-name">Toyota All New Avanza</h3>
+            <p class="car-caption">Mobil keluarga andalan dengan efisiensi bahan bakar tinggi dan bagasi luas.</p>
+            
+            <div class="car-specs">
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                <span>7 Penumpang</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+                <span>Matic CVT</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+                <span>Bensin</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span>Fitur ISOFIX</span>
+              </div>
+            </div>
+
+            <div class="car-footer">
+              <div class="car-price">
+                <span class="price-val">Rp 400.000</span>
+                <span class="price-unit">/ 24 jam</span>
+              </div>
+              <button class="btn btn-primary btn-sm btn-book" data-car="Toyota All New Avanza" data-price="400.000">Pesan Unit</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Suzuki Ertiga -->
+        <article class="car-card" data-category="mpv">
+          <div class="car-thumb">
+            <img src="Asset/Silver Suzuki Ertiga City Showcase.png" alt="Suzuki Ertiga" loading="lazy">
+            <span class="badge-status">Tersedia</span>
+          </div>
+          <div class="car-details">
+            <div class="car-category-label">MPV Keluarga</div>
+            <h3 class="car-name">Suzuki All New Ertiga</h3>
+            <p class="car-caption">Kenyamanan ekstra di jok baris kedua serta bantingan suspensi empuk dan stabil.</p>
+            
+            <div class="car-specs">
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                <span>7 Penumpang</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+                <span>Automatic</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+                <span>Bensin Hemat</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span>AC Digital</span>
+              </div>
+            </div>
+
+            <div class="car-footer">
+              <div class="car-price">
+                <span class="price-val">Rp 380.000</span>
+                <span class="price-unit">/ 24 jam</span>
+              </div>
+              <button class="btn btn-primary btn-sm btn-book" data-car="Suzuki All New Ertiga" data-price="380.000">Pesan Unit</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Daihatsu Xenia -->
+        <article class="car-card" data-category="mpv">
+          <div class="car-thumb">
+            <img src="Asset/Silver Daihatsu Xenia Cityscape Showcase.png" alt="Daihatsu All New Xenia" loading="lazy">
+            <span class="badge-status">Tersedia</span>
+          </div>
+          <div class="car-details">
+            <div class="car-category-label">MPV Keluarga</div>
+            <h3 class="car-name">Daihatsu All New Xenia</h3>
+            <p class="car-caption">Pilihan ekonomis dengan kapasitas lega, cocok untuk rute dalam maupun luar kota.</p>
+            
+            <div class="car-specs">
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                <span>7 Penumpang</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+                <span>Manual / Matic</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+                <span>Bensin</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span>Audio Bluetooth</span>
+              </div>
+            </div>
+
+            <div class="car-footer">
+              <div class="car-price">
+                <span class="price-val">Rp 370.000</span>
+                <span class="price-unit">/ 24 jam</span>
+              </div>
+              <button class="btn btn-primary btn-sm btn-book" data-car="Daihatsu All New Xenia" data-price="370.000">Pesan Unit</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Toyota Agya -->
+        <article class="car-card" data-category="city">
+          <div class="car-thumb">
+            <img src="Asset/Silver Toyota Agya Cityscape Showcase.png" alt="Toyota New Agya" loading="lazy">
+            <span class="badge-status">Paling Hemat</span>
+          </div>
+          <div class="car-details">
+            <div class="car-category-label">City Car Kompak</div>
+            <h3 class="car-name">Toyota New Agya</h3>
+            <p class="car-caption">Lincah menyusuri jalanan kota, mudah diparkir, dan konsumsi bensin sangat hemat.</p>
+            
+            <div class="car-specs">
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                <span>5 Penumpang</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+                <span>Matic / Manual</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+                <span>Sangat Irit</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span>Kamera Parkir</span>
+              </div>
+            </div>
+
+            <div class="car-footer">
+              <div class="car-price">
+                <span class="price-val">Rp 300.000</span>
+                <span class="price-unit">/ 24 jam</span>
+              </div>
+              <button class="btn btn-primary btn-sm btn-book" data-car="Toyota New Agya" data-price="300.000">Pesan Unit</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Daihatsu Sigra -->
+        <article class="car-card" data-category="mpv">
+          <div class="car-thumb">
+            <img src="Asset/Silver Toyota Sigra Cityscape Ad.png" alt="Daihatsu Sigra" loading="lazy">
+            <span class="badge-status">Tersedia</span>
+          </div>
+          <div class="car-details">
+            <div class="car-category-label">MPV Praktis</div>
+            <h3 class="car-name">Daihatsu Sigra</h3>
+            <p class="car-caption">Pilihan pas untuk perjalanan rombongan dengan anggaran sewa yang ramah di kantong.</p>
+            
+            <div class="car-specs">
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                <span>7 Penumpang</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+                <span>Manual / Matic</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+                <span>Bensin</span>
+              </div>
+              <div class="spec-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span>Sensor Mundur</span>
+              </div>
+            </div>
+
+            <div class="car-footer">
+              <div class="car-price">
+                <span class="price-val">Rp 320.000</span>
+                <span class="price-unit">/ 24 jam</span>
+              </div>
+              <button class="btn btn-primary btn-sm btn-book" data-car="Daihatsu Sigra" data-price="320.000">Pesan Unit</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Advantages / Why Choose Us -->
+  <section class="features-section" id="keunggulan">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-tag">Komitmen Kami</span>
+        <h2 class="section-title">Mengapa Memilih AutoRent?</h2>
+        <p class="section-subtitle">Kami mengutamakan keselamatan, kenyamanan, dan transparansi harga di setiap pemesanan Anda.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-box">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <polyline points="9 12 11 14 15 10"></polyline>
+            </svg>
+          </div>
+          <h3 class="feature-title">Unit Terawat & Higienis</h3>
+          <p class="feature-desc">Mobil selalu diservis berkala di bengkel resmi serta dicuci dan disemprot disinfektan sebelum diserahkan ke pelanggan.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <h3 class="feature-title">Harga Jujur & Transparan</h3>
+          <p class="feature-desc">Tarif yang tertera adalah tarif pasti tanpa ada biaya tambahan siluman di akhir masa sewa kendaraan.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 14 14"></polyline>
+            </svg>
+          </div>
+          <h3 class="feature-title">Layanan Antar Jemput</h3>
+          <p class="feature-desc">Unit dapat diantar dan diambil langsung di bandara, stasiun, hotel, maupun ke kediaman Anda secara tepat waktu.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <h3 class="feature-title">Driver Berpengalaman</h3>
+          <p class="feature-desc">Tersedia opsi sopir profesional, ramah, berpakaian rapi, dan memahami rute wisata maupun jalur alternatif.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="steps-section" id="cara-sewa">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-tag">Mudah & Cepat</span>
+        <h2 class="section-title">4 Langkah Mudah Menyewa Mobil</h2>
+        <p class="section-subtitle">Proses pemesanan praktis tanpa birokrasi rumit, cukup dari ponsel Anda.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">01</div>
+          <h3 class="step-title">Pilih Kendaraan</h3>
+          <p class="step-desc">Tentukan tipe mobil yang sesuai dengan kebutuhan kapasitas dan rute perjalanan Anda.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">02</div>
+          <h3 class="step-title">Tentukan Jadwal</h3>
+          <p class="step-desc">Pilih tanggal, durasi sewa, serta tentukan opsi sewa lepas kunci atau dengan pengemudi.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">03</div>
+          <h3 class="step-title">Verifikasi Data</h3>
+          <p class="step-desc">Kirimkan identitas sederhana (KTP/SIM A) untuk verifikasi cepat dan konfirmasi unit.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">04</div>
+          <h3 class="step-title">Unit Siap Digunakan</h3>
+          <p class="step-desc">Mobil diserahkan di lokasi yang disepakati dengan kondisi bersih, bahan bakar cukup, dan siap jalan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-content">
+          <span class="cta-subtitle">Reservasi Praktis & Cepat</span>
+          <h2 class="cta-title">Siap Memulai Perjalanan Anda Bersama AutoRent?</h2>
+          <p class="cta-desc">Konsultasikan kebutuhan armada Anda sekarang juga dengan staf kami. Kami siap memberikan penawaran terbaik dan layanan 24 jam.</p>
+          <div class="cta-buttons">
+            <a href="https://wa.me/6281376385456?text=Halo%20AutoRent,%20saya%20ingin%20konsultasi%20sewa%20mobil" target="_blank" class="btn btn-primary btn-lg">Hubungi WhatsApp</a>
+            <a href="#armada" class="btn btn-outline-light btn-lg">Cek Ketersediaan Mobil</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact & Location Section -->
+  <section class="contact-section" id="kontak">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div>
+            <h3>Telepon & WhatsApp</h3>
+            <p>0813-7638-5456</p>
+            <span>Respon Cepat 24 Jam</span>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <h3>Email Resmi</h3>
+            <p>reservasi@autorent.co.id</p>
+            <span>Layanan Pertanyaan & Kerjasama</span>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </div>
+          <div>
+            <h3>Lokasi Kantor & Pool</h3>
+            <p>Jl. Gatot Subroto No. 88, Jakarta Selatan</p>
+            <span>Buka Setiap Hari 07.00 - 22.00 WIB</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-col brand-col">
+        <a href="#" class="brand-logo footer-logo">
+          <div class="logo-symbol">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <rect x="2" y="7" width="20" height="13" rx="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+          </div>
+          <div class="logo-text">Auto<span>Rent</span></div>
+        </a>
+        <p class="footer-desc">
+          Penyedia jasa sewa kendaraan terdepan dengan dedikasi pada kebersihan, kenyamanan, dan keselamatan perjalanan pelanggan di seluruh rute Indonesia.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">Pilihan Mobil</h4>
+        <ul class="footer-links">
+          <li><a href="#armada">Mitsubishi Xpander</a></li>
+          <li><a href="#armada">Toyota All New Avanza</a></li>
+          <li><a href="#armada">Suzuki All New Ertiga</a></li>
+          <li><a href="#armada">Daihatsu All New Xenia</a></li>
+          <li><a href="#armada">Toyota New Agya</a></li>
+          <li><a href="#armada">Daihatsu Sigra</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">Layanan Kami</h4>
+        <ul class="footer-links">
+          <li><a href="#armada">Sewa Mobil Lepas Kunci</a></li>
+          <li><a href="#armada">Sewa Mobil dengan Driver</a></li>
+          <li><a href="#armada">Antar Jemput Bandara</a></li>
+          <li><a href="#armada">Sewa Mobil Korporat / Kantor</a></li>
+          <li><a href="#armada">Paket Wisata & Liburan</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">Informasi & Bantuan</h4>
+        <ul class="footer-links">
+          <li><a href="#cara-sewa">Syarat & Ketentuan Sewa</a></li>
+          <li><a href="#keunggulan">Kebijakan Asuransi</a></li>
+          <li><a href="#kontak">Pusat Bantuan</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>&copy; 2026 AutoRent Indonesia. Seluruh hak cipta dilindungi undang-undang.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Kebijakan Privasi</a>
+          <a href="#">Syarat Penggunaan</a>
+          <button type="button" class="footer-admin-link" id="btnFooterAdmin">Panel Admin</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Bottom Navigation Bar (Modern App-Style) -->
+  <nav class="bottom-nav" id="bottomNav" aria-label="Navigasi Bawah">
+    <a href="#beranda" class="bottom-nav-item active" data-section="beranda">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+      </svg>
+      <span>Beranda</span>
+    </a>
+
+    <a href="#armada" class="bottom-nav-item" data-section="armada">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 11l1.5-5a2 2 0 0 1 1.9-1.4h7.2a2 2 0 0 1 1.9 1.4L19 11"></path>
+        <rect x="3" y="11" width="18" height="6" rx="2"></rect>
+        <circle cx="7" cy="14" r="1.2" fill="currentColor"></circle>
+        <circle cx="17" cy="14" r="1.2" fill="currentColor"></circle>
+        <path d="M5 17v2a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-2"></path>
+        <path d="M16 17v2a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-2"></path>
+      </svg>
+      <span>Armada</span>
+    </a>
+
+    <a href="#keunggulan" class="bottom-nav-item" data-section="keunggulan">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        <polyline points="9 12 11 14 15 10"></polyline>
+      </svg>
+      <span>Keunggulan</span>
+    </a>
+
+    <a href="#cara-sewa" class="bottom-nav-item" data-section="cara-sewa">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+      </svg>
+      <span>Cara Sewa</span>
+    </a>
+
+    <a href="https://wa.me/6281376385456?text=Halo%20AutoRent,%20saya%20ingin%20tanya%20sewa%20mobil" target="_blank" class="bottom-nav-item bottom-nav-wa" aria-label="Chat WhatsApp AutoRent">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+      </svg>
+      <span>Chat WA</span>
+    </a>
+  </nav>
+
+  <!-- Booking Modal Interactive -->
+  <div class="modal-backdrop" id="bookingModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalCarTitle">Reservasi Mobil</h3>
+        <button class="modal-close" id="modalClose" aria-label="Tutup">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="modalBookingForm">
+          <div class="form-group">
+            <label for="bookingCarName">Tipe Mobil Terpilih</label>
+            <input type="text" id="bookingCarName" readonly>
+          </div>
+
+          <div class="form-group">
+            <label for="bookingUserName">Nama Lengkap</label>
+            <input type="text" id="bookingUserName" placeholder="Masukkan nama Anda" required>
+          </div>
+
+          <div class="form-group">
+            <label for="bookingUserPhone">Nomor WhatsApp</label>
+            <input type="tel" id="bookingUserPhone" placeholder="Contoh: 08123456789" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="bookingService">Pilihan Layanan</label>
+              <select id="bookingService">
+                <option value="Lepas Kunci">Lepas Kunci</option>
+                <option value="Dengan Sopir">Dengan Sopir (+ Rp 150.000/hari)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="bookingTransmission">Pilihan Transmisi</label>
+              <select id="bookingTransmission" required>
+                <option value="Matic (Automatic)">Matic (Automatic)</option>
+                <option value="Manual">Manual</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="bookingDays">Durasi Sewa</label>
+              <select id="bookingDays">
+                <option value="1">1 Hari</option>
+                <option value="2">2 Hari</option>
+                <option value="3">3 Hari</option>
+                <option value="4">4 Hari</option>
+                <option value="5">5 Hari</option>
+                <option value="7">7 Hari (1 Minggu)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="bookingStartDate">Tanggal Mulai Sewa</label>
+              <input type="date" id="bookingStartDate" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="bookingNotes">Catatan Tambahan (Lokasi Pengantaran / Penjemputan)</label>
+            <textarea id="bookingNotes" rows="2" placeholder="Contoh: Antar ke Bandara Soekarno-Hatta Terminal 3 jam 09.00"></textarea>
+          </div>
+
+          <div class="modal-total-box">
+            <span>Estimasi Biaya:</span>
+            <strong id="modalTotalPrice">Rp 0</strong>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block btn-lg">Lanjutkan Reservasi ke WhatsApp</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Modal (Kelola Armada Mobil) -->
+  <div class="modal-backdrop" id="adminModal">
+    <div class="modal-dialog modal-dialog-lg">
+      <div class="modal-header">
+        <div class="modal-header-info">
+          <span class="badge-status">Panel Admin</span>
+          <h3 class="modal-title">Kelola Armada Mobil</h3>
+        </div>
+        <button class="modal-close" id="adminModalClose" aria-label="Tutup">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="admin-tabs">
+          <button type="button" class="admin-tab-btn active" id="tabBtnAddCar" data-tab="tabAddCar">Tambah Mobil Baru</button>
+          <button type="button" class="admin-tab-btn" id="tabBtnManageCar" data-tab="tabManageCar">Mobil Tersimpan (<span id="customCarCount">0</span>)</button>
+        </div>
+
+        <!-- Tab 1: Form Tambah Mobil -->
+        <div class="admin-tab-content active" id="tabAddCar">
+          <form id="formAddCar">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="adminCarName">Nama Mobil</label>
+                <input type="text" id="adminCarName" placeholder="Contoh: Toyota Fortuner GR Sport" required>
+              </div>
+              <div class="form-group">
+                <label for="adminCarCategory">Kategori Kendaraan</label>
+                <select id="adminCarCategory" required>
+                  <option value="mpv">MPV Keluarga (7-Seater)</option>
+                  <option value="city">City Car Kompak</option>
+                  <option value="suv">SUV &amp; Premium</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="adminCarPrice">Harga Sewa / 24 Jam (Rp)</label>
+                <input type="number" id="adminCarPrice" placeholder="Contoh: 500000" min="50000" step="10000" required>
+              </div>
+              <div class="form-group">
+                <label for="adminCarTransmission">Opsi Transmisi Bawaan</label>
+                <select id="adminCarTransmission">
+                  <option value="Matic / Manual">Matic / Manual (Bisa Pilih)</option>
+                  <option value="Matic (Automatic)">Matic Saja</option>
+                  <option value="Manual">Manual Saja</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="adminCarCapacity">Kapasitas Penumpang</label>
+                <select id="adminCarCapacity">
+                  <option value="7 Penumpang">7 Penumpang</option>
+                  <option value="5 Penumpang">5 Penumpang</option>
+                  <option value="8 Penumpang">8 Penumpang</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="adminCarBadge">Status Badge</label>
+                <select id="adminCarBadge">
+                  <option value="Tersedia">Tersedia</option>
+                  <option value="Unit Baru">Unit Baru</option>
+                  <option value="Paling Populer">Paling Populer</option>
+                  <option value="Promo Hemat">Promo Hemat</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="adminCarDesc">Deskripsi / Keunggulan Unit</label>
+              <textarea id="adminCarDesc" rows="2" placeholder="Contoh: Mesin bertenaga, kabin senyap, full audio, cocok untuk perjalanan dinas maupun liburan keluarga." required></textarea>
+            </div>
+
+            <!-- Pilihan Gambar -->
+            <div class="form-group">
+              <label>Foto Mobil</label>
+              <div class="image-source-options">
+                <label class="radio-label">
+                  <input type="radio" name="imageSource" value="upload" id="imgSrcUpload" checked>
+                  <span>Upload Foto Sendiri</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="imageSource" value="preset" id="imgSrcPreset">
+                  <span>Pilih dari Preset Asset</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="imageSource" value="url" id="imgSrcUrl">
+                  <span>Link / URL Gambar</span>
+                </label>
+              </div>
+
+              <!-- Input Upload -->
+              <div id="boxImgUpload" class="img-input-box">
+                <input type="file" id="adminCarFile" accept="image/*">
+                <small class="helper-text">Pilih foto dari komputer / HP Anda (otomatis diproses &amp; disimpan di browser)</small>
+              </div>
+
+              <!-- Input Preset -->
+              <div id="boxImgPreset" class="img-input-box" style="display: none;">
+                <select id="adminCarPreset">
+                  <option value="Asset/Silver Toyota Avanza Cityscape Showcase.png">Toyota All New Avanza</option>
+                  <option value="Asset/Mitsubishi Xpander Cityscape Showcase.png">Mitsubishi Xpander</option>
+                  <option value="Asset/Silver Suzuki Ertiga City Showcase.png">Suzuki All New Ertiga</option>
+                  <option value="Asset/Silver Daihatsu Xenia Cityscape Showcase.png">Daihatsu All New Xenia</option>
+                  <option value="Asset/Silver Toyota Agya Cityscape Showcase.png">Toyota New Agya</option>
+                  <option value="Asset/Silver Toyota Sigra Cityscape Ad.png">Daihatsu Sigra</option>
+                  <option value="Asset/Modern Car Rental Fleet in Cityscape.png">Banner Armada Kota</option>
+                </select>
+              </div>
+
+              <!-- Input URL -->
+              <div id="boxImgUrl" class="img-input-box" style="display: none;">
+                <input type="url" id="adminCarUrl" placeholder="https://contoh.com/gambar-mobil.jpg">
+              </div>
+
+              <!-- Live Preview -->
+              <div class="admin-preview-container" id="adminImgPreviewContainer">
+                <span>Preview Foto Mobil:</span>
+                <img id="adminImgPreview" src="Asset/Silver Toyota Avanza Cityscape Showcase.png" alt="Preview Mobil">
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="btnSubmitAddCar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Tambahkan Mobil ke Katalog
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 2: Daftar Mobil Tersimpan -->
+        <div class="admin-tab-content" id="tabManageCar" style="display: none;">
+          <div class="admin-cars-header">
+            <p>Mobil di bawah ini ditambahkan oleh admin dan langsung tampil di halaman armada.</p>
+            <button type="button" class="btn btn-sm btn-outline-danger" id="btnClearAllCustomCars">Hapus Semua Mobil Tambahan</button>
+          </div>
+          <div class="admin-cars-list" id="adminCarsList">
+            <!-- Dynamic list generated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="script.js?v=3.1"></script>
+</body>
+</html>
