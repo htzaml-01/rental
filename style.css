@@ -1408,10 +1408,16 @@ button, input, select, textarea {
 
   .search-section {
     margin-top: 16px;
+    padding-bottom: 40px;
+  }
+
+  .search-card {
+    padding: 20px 16px;
   }
 
   .search-form {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
 
   .form-action {
@@ -1421,11 +1427,23 @@ button, input, select, textarea {
   .section-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 16px;
   }
 
   .fleet-filter-pills {
     width: 100%;
-    justify-content: space-between;
+    overflow-x: auto;
+    display: flex;
+    gap: 6px;
+    padding: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .fleet-filter-pills .pill {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 8px 14px;
+    font-size: 0.8125rem;
   }
 
   .footer-content {
@@ -1435,6 +1453,150 @@ button, input, select, textarea {
 
   .form-row {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Extra Mobile Responsiveness (< 640px) */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .hero-overlay {
+    padding: 28px 0 32px;
+  }
+
+  .hero-title-hero {
+    font-size: 1.85rem;
+    line-height: 1.25;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .btn-hero-primary,
+  .btn-hero-secondary {
+    width: 100%;
+    min-width: 100%;
+    text-align: center;
+    padding: 14px;
+  }
+
+  .section-title {
+    font-size: 1.65rem;
+  }
+
+  .car-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .car-thumb img {
+    height: 180px;
+  }
+
+  .car-details {
+    padding: 18px 16px;
+  }
+
+  .car-name {
+    font-size: 1.15rem;
+  }
+
+  .car-specs {
+    gap: 8px;
+    padding: 12px 0;
+    margin-bottom: 16px;
+  }
+
+  .spec-item {
+    font-size: 0.78rem;
+  }
+
+  .features-section,
+  .steps-section {
+    padding: 50px 0;
+  }
+
+  .features-grid,
+  .steps-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 28px;
+  }
+
+  .feature-box,
+  .step-card {
+    padding: 22px 18px;
+  }
+
+  .cta-section {
+    padding: 40px 0 20px;
+  }
+
+  .cta-card {
+    padding: 32px 18px;
+    border-radius: var(--radius-lg);
+  }
+
+  .cta-title {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+
+  .cta-desc {
+    font-size: 0.88rem;
+    margin-bottom: 24px;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .cta-buttons .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .contact-section {
+    padding: 30px 0 60px;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .contact-card {
+    padding: 18px 16px;
+  }
+
+  .footer {
+    padding-top: 45px;
+  }
+
+  .modal-dialog {
+    margin: 12px;
+    max-height: 92vh;
+    border-radius: var(--radius-md);
+  }
+
+  .modal-header {
+    padding: 16px 18px;
+  }
+
+  .modal-title {
+    font-size: 1.125rem;
+  }
+
+  .modal-body {
+    padding: 18px 16px;
   }
 }
 

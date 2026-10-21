@@ -1134,5 +1134,83 @@
     width: 100%;
     justify-content: center;
   }
+
+  .dash-container {
+    padding: 0 16px;
+  }
+
+  .dash-main {
+    padding: 24px 0 40px;
+  }
+
+  .dash-title {
+    font-size: 1.45rem;
+  }
+
+  .dash-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .dash-tabs-list {
+    padding: 0 4px;
+    gap: 4px;
+  }
+
+  .dash-tab-btn {
+    padding: 12px 14px;
+    font-size: 0.82rem;
+    gap: 6px;
+  }
+
+  .dash-tab-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .dash-card-header {
+    padding: 18px 16px;
+  }
+
+  .dash-form {
+    padding: 18px 16px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .form-action-buttons-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .form-action-buttons-group .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .dash-preview-content {
+    padding: 18px 16px;
+  }
+
+  .dash-notice-box {
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px 16px;
+  }
+
+  .dash-card-subbox {
+    padding: 16px;
+  }
+
+  .table-responsive {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dash-table th,
+  .dash-table td {
+    padding: 12px 14px;
+  }
 }
 
