@@ -1,98 +1,8 @@
 // AutoRent - Dashboard Admin Logic
+// Integrated with Supabase Cloud Database & Stock Management
 // Strictly without any emojis or emoticons
 
 document.addEventListener('DOMContentLoaded', () => {
-  const STORAGE_KEY = 'autorent_custom_cars';
-
-  // Default fleet in the catalog
-  const DEFAULT_FLEET = [
-    {
-      id: 'default_1',
-      name: 'Mitsubishi Xpander',
-      category: 'mpv',
-      price: 450000,
-      transmission: 'Matic / Manual',
-      capacity: '7 Penumpang',
-      badge: 'Tersedia',
-      image: 'Asset/Mitsubishi Xpander Cityscape Showcase.png',
-      isCustom: false
-    },
-    {
-      id: 'default_2',
-      name: 'Toyota All New Avanza',
-      category: 'mpv',
-      price: 400000,
-      transmission: 'Matic CVT',
-      capacity: '7 Penumpang',
-      badge: 'Paling Populer',
-      image: 'Asset/Silver Toyota Avanza Cityscape Showcase.png',
-      isCustom: false
-    },
-    {
-      id: 'default_3',
-      name: 'Suzuki All New Ertiga',
-      category: 'mpv',
-      price: 380000,
-      transmission: 'Automatic',
-      capacity: '7 Penumpang',
-      badge: 'Tersedia',
-      image: 'Asset/Silver Suzuki Ertiga City Showcase.png',
-      isCustom: false
-    },
-    {
-      id: 'default_4',
-      name: 'Daihatsu All New Xenia',
-      category: 'mpv',
-      price: 370000,
-      transmission: 'Manual / Matic',
-      capacity: '7 Penumpang',
-      badge: 'Tersedia',
-      image: 'Asset/Silver Daihatsu Xenia Cityscape Showcase.png',
-      isCustom: false
-    },
-    {
-      id: 'default_5',
-      name: 'Toyota New Agya',
-      category: 'city',
-      price: 300000,
-      transmission: 'Matic / Manual',
-      capacity: '5 Penumpang',
-      badge: 'Paling Hemat',
-      image: 'Asset/Silver Toyota Agya Cityscape Showcase.png',
-      isCustom: false
-    },
-    {
-      id: 'default_6',
-      name: 'Daihatsu Sigra',
-      category: 'mpv',
-      price: 320000,
-      transmission: 'Manual / Matic',
-      capacity: '7 Penumpang',
-      badge: 'Tersedia',
-      image: 'Asset/Silver Toyota Sigra Cityscape Ad.png',
-      isCustom: false
-    }
-  ];
-
-  // Helper functions for localStorage
-  function getCustomCars() {
-    try {
-      const data = localStorage.getItem(STORAGE_KEY);
-      return data ? JSON.parse(data) : [];
-    } catch (err) {
-      console.error('Error reading localStorage', err);
-      return [];
-    }
-  }
-
-  function saveCustomCars(cars) {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(cars));
-    } catch (err) {
-      console.error('Error writing localStorage', err);
-    }
-  }
-
   // Toast Notification System
   function showToast(message, type = 'success') {
     const container = document.getElementById('toastContainer');
@@ -116,9 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3500);
   }
 
-  // Elements
+  // ========================================================
+  // DOM Elements
+  // ========================================================
   const statTotalCars = document.getElementById('statTotalCars');
-  const statCustomCars = document.getElementById('statCustomCars');
+  const statTotalStock = document.getElementById('statTotalStock');
+  const statDbMode = document.getElementById('statDbMode');
+  const statDbDesc = document.getElementById('statDbDesc');
   const dashCarsTableBody = document.getElementById('dashCarsTableBody');
   const dashSearchFilter = document.getElementById('dashSearchFilter');
   const dashFilterChips = document.querySelectorAll('#dashFilterCategory .dash-chip');
@@ -203,17 +117,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Render Table & Stats
-  function updateDashboardView() {
-    const customCars = getCustomCars();
+  // ========================================================
+  // Render Table & Fleet Stats
+  // ========================================================
+  async function updateDashboardView() {
+    let allCars = [];
+    if (window.AutoRentDB && typeof window.AutoRentDB.getAllCars === 'function') {
+      try {
+        allCars = await window.AutoRentDB.getAllCars();
+      } catch (err) {
+        console.error('Failed to get cars from AutoRentDB', err);
+      }
+    }
 
-    // Update Stats
-    const totalCount = DEFAULT_FLEET.length + customCars.length;
+    if (!allCars || allCars.length === 0) {
+      allCars = window.AutoRentDB ? window.AutoRentDB.DEFAULT_FLEET : [];
+    }
+
+    // Update Stats Cards
+    const totalCount = allCars.length;
+    const totalStock = allCars.reduce((acc, car) => acc + (car.stock || 0), 0);
+
     if (statTotalCars) statTotalCars.textContent = totalCount;
-    if (statCustomCars) statCustomCars.textContent = customCars.length;
+    if (statTotalStock) statTotalStock.textContent = `${totalStock} Unit`;
 
-    // Combine lists: custom cars first, then default cars
-    const allCars = [...customCars.map(c => ({ ...c, isCustom: true })), ...DEFAULT_FLEET];
+    const isConnected = window.AutoRentDB && window.AutoRentDB.isConnected();
+    if (statDbMode) {
+      statDbMode.textContent = isConnected ? 'Supabase Cloud' : 'Lokal Offline';
+      statDbMode.style.color = isConnected ? '#10b981' : 'var(--secondary)';
+    }
+    if (statDbDesc) {
+      statDbDesc.textContent = isConnected ? 'Tersinkron ke server cloud' : 'Tersimpan di browser';
+    }
 
     // Filter
     const filteredCars = allCars.filter(car => {
@@ -222,12 +157,13 @@ document.addEventListener('DOMContentLoaded', () => {
       return matchesCategory && matchesSearch;
     });
 
+    if (!dashCarsTableBody) return;
     dashCarsTableBody.innerHTML = '';
 
     if (filteredCars.length === 0) {
       dashCarsTableBody.innerHTML = `
         <tr>
-          <td colspan="7" style="text-align: center; padding: 36px; color: var(--text-muted);">
+          <td colspan="8" style="text-align: center; padding: 36px; color: var(--text-muted);">
             Tidak ditemukan mobil dengan kriteria pencarian tersebut.
           </td>
         </tr>
@@ -250,6 +186,10 @@ document.addEventListener('DOMContentLoaded', () => {
         ? `<button type="button" class="btn-delete-car" data-id="${car.id}">Hapus</button>`
         : `<span style="color: #94a3b8; font-size: 0.8rem;">Terkunci</span>`;
 
+      const stock = (typeof car.stock === 'number') ? car.stock : 3;
+      const stockClass = (stock <= 0) ? 'stock-empty' : (stock <= 3 ? 'stock-low' : 'stock-available');
+      const stockLabel = (stock <= 0) ? 'Habis' : (stock <= 3 ? 'Menipis' : 'Sedia');
+
       tr.innerHTML = `
         <td>
           <img src="${car.image}" alt="${car.name}" class="table-car-thumb" onerror="this.src='Asset/Silver Toyota Avanza Cityscape Showcase.png'">
@@ -266,6 +206,14 @@ document.addEventListener('DOMContentLoaded', () => {
           <span style="font-size: 0.75rem; color: #94a3b8;">/ 24 jam</span>
         </td>
         <td>
+          <div class="stock-ctrl-group">
+            <button type="button" class="btn-stock-step btn-stock-dec" data-id="${car.id}" data-current="${stock}" data-name="${car.name}" title="Kurangi 1 unit">-</button>
+            <span class="stock-pill ${stockClass}">${stock} Unit</span>
+            <button type="button" class="btn-stock-step btn-stock-inc" data-id="${car.id}" data-current="${stock}" data-name="${car.name}" title="Tambah 1 unit">+</button>
+          </div>
+          <span class="stock-badge-sub ${stockClass}">${stockLabel}</span>
+        </td>
+        <td>
           <span class="badge-status-pill">${car.badge || 'Tersedia'}</span>
         </td>
         <td>
@@ -279,39 +227,43 @@ document.addEventListener('DOMContentLoaded', () => {
       dashCarsTableBody.appendChild(tr);
     });
 
-    // Attach delete button handlers
-    dashCarsTableBody.querySelectorAll('.btn-delete-car').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const idToDelete = btn.getAttribute('data-id');
-        deleteCar(idToDelete);
+    // Attach stock step button handlers
+    dashCarsTableBody.querySelectorAll('.btn-stock-step').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-id');
+        const name = btn.getAttribute('data-name');
+        const current = parseInt(btn.getAttribute('data-current'), 10) || 0;
+        const isInc = btn.classList.contains('btn-stock-inc');
+        const newStock = isInc ? current + 1 : Math.max(0, current - 1);
+
+        if (window.AutoRentDB) {
+          await window.AutoRentDB.updateCarStock(id, newStock);
+          showToast(`Stok ${name} berhasil diubah menjadi ${newStock} unit.`, 'success');
+          updateDashboardView();
+        }
       });
     });
-  }
 
-  // Delete a custom car
-  function deleteCar(id) {
-    let customCars = getCustomCars();
-    const carToDelete = customCars.find(c => c.id === id);
-    const carName = carToDelete ? carToDelete.name : 'Mobil';
-
-    customCars = customCars.filter(c => c.id !== id);
-    saveCustomCars(customCars);
-
-    updateDashboardView();
-    showToast(`Mobil ${carName} berhasil dihapus dari katalog!`, 'success');
+    // Attach delete button handlers
+    dashCarsTableBody.querySelectorAll('.btn-delete-car').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const idToDelete = btn.getAttribute('data-id');
+        if (confirm('Hapus mobil ini dari katalog armada?')) {
+          if (window.AutoRentDB) {
+            await window.AutoRentDB.deleteCar(idToDelete);
+            showToast('Mobil berhasil dihapus dari katalog.', 'success');
+            updateDashboardView();
+          }
+        }
+      });
+    });
   }
 
   // Reset all custom cars
   if (btnResetCustomCars) {
     btnResetCustomCars.addEventListener('click', () => {
-      const customCars = getCustomCars();
-      if (customCars.length === 0) {
-        showToast('Tidak ada mobil custom buatan admin untuk dihapus.', 'error');
-        return;
-      }
-
       if (confirm('Apakah Anda yakin ingin menghapus SEMUA mobil buatan admin? Katalog akan kembali ke unit bawaan.')) {
-        saveCustomCars([]);
+        localStorage.setItem('autorent_custom_cars', '[]');
         updateDashboardView();
         showToast('Semua mobil custom berhasil dibersihkan!', 'success');
       }
@@ -338,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Form Submit: Tambah Mobil Baru
   if (dashFormAddCar) {
-    dashFormAddCar.addEventListener('submit', (e) => {
+    dashFormAddCar.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const name = document.getElementById('carName').value.trim();
@@ -346,6 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const price = parseInt(document.getElementById('carPrice').value, 10);
       const transmission = document.getElementById('carTransmission').value;
       const capacity = document.getElementById('carCapacity').value;
+      const stock = parseInt(document.getElementById('carStock').value, 10) || 3;
       const badge = document.getElementById('carBadge').value;
       const desc = document.getElementById('carDesc').value.trim();
 
@@ -361,18 +314,19 @@ document.addEventListener('DOMContentLoaded', () => {
         price: price,
         transmission: transmission,
         capacity: capacity,
+        stock: stock,
         badge: badge,
         desc: desc,
         image: currentImageData || 'Asset/Silver Toyota Avanza Cityscape Showcase.png',
         createdAt: new Date().toISOString()
       };
 
-      const customCars = getCustomCars();
-      customCars.unshift(newCar);
-      saveCustomCars(customCars);
+      if (window.AutoRentDB) {
+        await window.AutoRentDB.addCar(newCar);
+      }
 
       updateDashboardView();
-      showToast(`Mobil ${name} berhasil ditambahkan dan langsung aktif di katalog website!`, 'success');
+      showToast(`Mobil ${name} dengan stok ${stock} unit berhasil dipublikasikan!`, 'success');
 
       // Reset Form
       dashFormAddCar.reset();
@@ -383,11 +337,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ========================================================
-  // Tab Switching (Armada Mobil vs Pengaturan Kontak)
+  // Tab Switching (Armada Mobil vs Kontak vs Supabase)
   // ========================================================
   const tabBtns = document.querySelectorAll('.dash-tab-btn');
   const paneArmada = document.getElementById('paneArmada');
   const paneKontak = document.getElementById('paneKontak');
+  const paneSupabase = document.getElementById('paneSupabase');
 
   function switchTab(tabId) {
     tabBtns.forEach(btn => {
@@ -396,13 +351,14 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
     });
 
-    if (tabId === 'armada') {
-      if (paneArmada) paneArmada.style.display = 'block';
-      if (paneKontak) paneKontak.style.display = 'none';
-    } else if (tabId === 'kontak') {
-      if (paneArmada) paneArmada.style.display = 'none';
-      if (paneKontak) paneKontak.style.display = 'block';
+    if (paneArmada) paneArmada.style.display = (tabId === 'armada') ? 'block' : 'none';
+    if (paneKontak) paneKontak.style.display = (tabId === 'kontak') ? 'block' : 'none';
+    if (paneSupabase) paneSupabase.style.display = (tabId === 'supabase') ? 'block' : 'none';
+
+    if (tabId === 'kontak') {
       loadCompanyProfileToForm();
+    } else if (tabId === 'supabase') {
+      loadSupabaseConfigToForm();
     }
   }
 
@@ -582,17 +538,205 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Listen to Storage events (cross-tab synchronization)
-  window.addEventListener('storage', (e) => {
-    if (e.key === STORAGE_KEY) {
+  // ========================================================
+  // Supabase Database Management (Tab 3)
+  // ========================================================
+  const sbProjectUrl = document.getElementById('sbProjectUrl');
+  const sbAnonKey = document.getElementById('sbAnonKey');
+  const dashFormSupabase = document.getElementById('dashFormSupabase');
+  const btnTestSupabaseConn = document.getElementById('btnTestSupabaseConn');
+  const btnClearSupabaseConn = document.getElementById('btnClearSupabaseConn');
+  const btnMigrateToSupabase = document.getElementById('btnMigrateToSupabase');
+  const btnCopySql = document.getElementById('btnCopySql');
+
+  const dbConnStatusDot = document.getElementById('dbConnStatusDot');
+  const dbConnStatusText = document.getElementById('dbConnStatusText');
+  const tabDbStatusPill = document.getElementById('tabDbStatusPill');
+
+  function updateDbConnectionUI() {
+    if (!window.AutoRentDB) return;
+    const isConn = window.AutoRentDB.isConnected();
+
+    if (isConn) {
+      if (dbConnStatusDot) {
+        dbConnStatusDot.className = 'status-dot status-dot-online';
+      }
+      if (dbConnStatusText) {
+        dbConnStatusText.textContent = 'Terhubung ke Supabase Cloud';
+      }
+      if (tabDbStatusPill) {
+        tabDbStatusPill.textContent = 'Cloud Aktif';
+        tabDbStatusPill.className = 'dash-tab-pill-status status-connected';
+      }
+    } else {
+      if (dbConnStatusDot) {
+        dbConnStatusDot.className = 'status-dot status-dot-offline';
+      }
+      if (dbConnStatusText) {
+        dbConnStatusText.textContent = 'Mode Lokal Offline (Belum Terhubung)';
+      }
+      if (tabDbStatusPill) {
+        tabDbStatusPill.textContent = 'Lokal Offline';
+        tabDbStatusPill.className = 'dash-tab-pill-status';
+      }
+    }
+  }
+
+  function loadSupabaseConfigToForm() {
+    if (!window.AutoRentDB) return;
+    const config = window.AutoRentDB.getConfig();
+    if (sbProjectUrl) sbProjectUrl.value = config.url;
+    if (sbAnonKey) sbAnonKey.value = config.key;
+    updateDbConnectionUI();
+  }
+
+  if (dashFormSupabase) {
+    dashFormSupabase.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const url = sbProjectUrl.value.trim();
+      const key = sbAnonKey.value.trim();
+
+      if (!url || !key) {
+        showToast('Project URL dan Anon Key harus diisi.', 'error');
+        return;
+      }
+
+      window.AutoRentDB.saveConfig(url, key);
+      updateDbConnectionUI();
+
+      showToast('Menguji koneksi ke Supabase...', 'success');
+      const test = await window.AutoRentDB.testConnection(url, key);
+      if (test.success) {
+        showToast('Kredensial Supabase tersimpan dan terhubung!', 'success');
+      } else {
+        showToast(test.message, 'error');
+      }
       updateDashboardView();
-    } else if (e.key === PROFILE_KEY) {
+    });
+  }
+
+  if (btnTestSupabaseConn) {
+    btnTestSupabaseConn.addEventListener('click', async () => {
+      const url = sbProjectUrl.value.trim();
+      const key = sbAnonKey.value.trim();
+
+      if (!url || !key) {
+        showToast('Masukkan URL dan Anon Key terlebih dahulu.', 'error');
+        return;
+      }
+
+      showToast('Menghubungkan ke server Supabase...', 'success');
+      const res = await window.AutoRentDB.testConnection(url, key);
+      if (res.success) {
+        showToast(res.message, 'success');
+      } else {
+        showToast(res.message, 'error');
+      }
+    });
+  }
+
+  if (btnClearSupabaseConn) {
+    btnClearSupabaseConn.addEventListener('click', () => {
+      if (confirm('Putus koneksi Supabase? Sistem akan kembali menggunakan penyimpanan lokal browser.')) {
+        window.AutoRentDB.clearConfig();
+        if (sbProjectUrl) sbProjectUrl.value = '';
+        if (sbAnonKey) sbAnonKey.value = '';
+        updateDbConnectionUI();
+        updateDashboardView();
+        showToast('Koneksi Supabase diputus. Mode lokal aktif.', 'success');
+      }
+    });
+  }
+
+  if (btnMigrateToSupabase) {
+    btnMigrateToSupabase.addEventListener('click', async () => {
+      if (!window.AutoRentDB.isConnected()) {
+        showToast('Harap hubungkan Supabase terlebih dahulu sebelum migrasi data.', 'error');
+        return;
+      }
+
+      try {
+        btnMigrateToSupabase.disabled = true;
+        btnMigrateToSupabase.innerHTML = '<span>Mengunggah data...</span>';
+        const count = await window.AutoRentDB.migrateLocalToSupabase();
+        showToast(`Sukses mengunggah ${count} unit mobil ke database Supabase!`, 'success');
+        updateDashboardView();
+      } catch (err) {
+        showToast(`Gagal migrasi: ${err.message}`, 'error');
+      } finally {
+        btnMigrateToSupabase.disabled = false;
+        btnMigrateToSupabase.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+            <polyline points="17 1 21 5 17 9"></polyline>
+            <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+            <polyline points="7 23 3 19 7 15"></polyline>
+            <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+          </svg>
+          <span>Sinkronkan Armada Lokal ke Supabase Cloud</span>
+        `;
+      }
+    });
+  }
+
+  if (btnCopySql) {
+    btnCopySql.addEventListener('click', () => {
+      const sqlText = `-- Skrip Tabel cars & RLS AutoRent Indonesia
+CREATE TABLE IF NOT EXISTS public.cars (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  category TEXT NOT NULL,
+  price BIGINT NOT NULL,
+  transmission TEXT DEFAULT 'Matic / Manual',
+  capacity TEXT DEFAULT '7 Penumpang',
+  stock INTEGER DEFAULT 3 CHECK (stock >= 0),
+  badge TEXT DEFAULT 'Tersedia',
+  image TEXT DEFAULT '',
+  description TEXT DEFAULT '',
+  is_custom BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE public.cars ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public read cars" 
+ON public.cars FOR SELECT TO anon, authenticated USING (true);
+
+CREATE POLICY "Allow insert cars" 
+ON public.cars FOR INSERT TO anon, authenticated WITH CHECK (true);
+
+CREATE POLICY "Allow update cars" 
+ON public.cars FOR UPDATE TO anon, authenticated USING (true);
+
+CREATE POLICY "Allow delete cars" 
+ON public.cars FOR DELETE TO anon, authenticated USING (true);`;
+
+      navigator.clipboard.writeText(sqlText).then(() => {
+        showToast('Skrip SQL berhasil disalin ke clipboard!', 'success');
+      }).catch(() => {
+        showToast('Gagal menyalin otomatis, silakan salin dari kotak teks.', 'error');
+      });
+    });
+  }
+
+  // ========================================================
+  // Listeners & Initialization
+  // ========================================================
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'autorent_custom_cars' || e.key === 'autorent_fleet_stocks' || e.key === 'autorent_supabase_url') {
+      updateDashboardView();
+      updateDbConnectionUI();
+    } else if (e.key === 'autorent_company_profile') {
       loadCompanyProfileToForm();
     }
+  });
+
+  window.addEventListener('autorent:db_change', () => {
+    updateDashboardView();
+    updateDbConnectionUI();
   });
 
   // Initial load
   updateDashboardView();
   loadCompanyProfileToForm();
+  loadSupabaseConfigToForm();
 });
-

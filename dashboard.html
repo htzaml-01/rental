@@ -66,6 +66,16 @@
           </svg>
           <span>Pengaturan Kontak &amp; Profil</span>
         </button>
+
+        <button type="button" class="dash-tab-btn" id="tabBtnSupabase" data-tab="supabase" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+          </svg>
+          <span>Database Supabase</span>
+          <span class="dash-tab-pill-status" id="tabDbStatusPill">Lokal Offline</span>
+        </button>
       </div>
     </div>
   </nav>
@@ -110,21 +120,35 @@
           <div class="stat-content">
             <span class="stat-label">Total Armada Katalog</span>
             <strong class="stat-val" id="statTotalCars">6</strong>
-            <span class="stat-desc">Termasuk unit bawaan &amp; custom</span>
+            <span class="stat-desc">Unit terdaftar di sistem</span>
           </div>
         </div>
 
         <div class="stat-card">
           <div class="stat-icon stat-icon-emerald">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 20h9"></path>
-              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </div>
           <div class="stat-content">
-            <span class="stat-label">Mobil Tambahan Admin</span>
-            <strong class="stat-val" id="statCustomCars">0</strong>
-            <span class="stat-desc">Dibuat melalui dashboard</span>
+            <span class="stat-label">Total Stok Siap Sewa</span>
+            <strong class="stat-val" id="statTotalStock">21</strong>
+            <span class="stat-desc">Akumulasi stok semua unit</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+              <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Status Database</span>
+            <strong class="stat-val" id="statDbMode" style="font-size: 1.15rem;">Lokal Offline</strong>
+            <span class="stat-desc" id="statDbDesc">Tersimpan di browser</span>
           </div>
         </div>
 
@@ -139,20 +163,6 @@
             <span class="stat-label">Opsi Transmisi</span>
             <strong class="stat-val">Matic &amp; Manual</strong>
             <span class="stat-desc">Tersinkron otomatis ke WhatsApp</span>
-          </div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon stat-icon-purple">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-            </svg>
-          </div>
-          <div class="stat-content">
-            <span class="stat-label">Kategori Unit</span>
-            <strong class="stat-val">3 Tipe</strong>
-            <span class="stat-desc">MPV, City Car &amp; SUV</span>
           </div>
         </div>
       </section>
@@ -217,6 +227,10 @@
                   <option value="8 Penumpang">8 Penumpang</option>
                   <option value="4 Penumpang">4 Penumpang</option>
                 </select>
+              </div>
+              <div class="form-group">
+                <label for="carStock">Jumlah Stok Unit Tersedia</label>
+                <input type="number" id="carStock" value="3" min="0" max="99" required>
               </div>
               <div class="form-group">
                 <label for="carBadge">Status Label Badge</label>
@@ -363,6 +377,7 @@
                   <th>Nama Unit &amp; Kategori</th>
                   <th>Transmisi</th>
                   <th>Harga / 24 Jam</th>
+                  <th>Kelola Stok Unit</th>
                   <th>Status</th>
                   <th>Tipe</th>
                   <th>Aksi</th>
@@ -623,6 +638,195 @@
       </div>
       <!-- END PANE 2 -->
 
+      <!-- ======================================================== -->
+      <!-- PANE 3: KONEKSI SUPABASE CLOUD DATABASE                  -->
+      <!-- ======================================================== -->
+      <div class="dash-tab-pane" id="paneSupabase" role="tabpanel" style="display: none;">
+        
+        <!-- Welcome Title -->
+        <div class="dash-welcome">
+          <div>
+            <h1 class="dash-title">Integrasi Database Supabase Cloud</h1>
+            <p class="dash-subtitle">Hubungkan katalog mobil dan stok unit ke database Supabase agar data tersimpan terpusat dan realtime di cloud.</p>
+          </div>
+          <div class="dash-welcome-action">
+            <span class="db-status-pill-badge" id="dbConnStatusBadge">
+              <span class="status-dot status-dot-offline" id="dbConnStatusDot"></span>
+              <span id="dbConnStatusText">Mode Lokal Offline (Belum Terhubung)</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="dash-workspace-grid">
+          
+          <!-- Left: Connection Form -->
+          <section class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title-group">
+                <div class="icon-circle icon-circle-emerald">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="dash-card-title">Kredensial API Supabase</h2>
+                  <p class="dash-card-desc">Dapatkan Project URL dan Anon Key dari dashboard proyek Supabase Anda.</p>
+                </div>
+              </div>
+            </div>
+
+            <form id="dashFormSupabase" class="dash-form">
+              <div class="form-group">
+                <label for="sbProjectUrl">
+                  Project URL Supabase
+                  <span class="required-star">*</span>
+                </label>
+                <div class="input-with-prefix">
+                  <span class="input-prefix-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="2" y1="12" x2="22" y2="12"></line>
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                  </span>
+                  <input type="url" id="sbProjectUrl" placeholder="Contoh: https://xyzproject.supabase.co" required>
+                </div>
+                <span class="form-field-hint">Dapat ditemukan di Supabase: Project Settings &gt; API &gt; Project URL</span>
+              </div>
+
+              <div class="form-group">
+                <label for="sbAnonKey">
+                  Anon / Public API Key
+                  <span class="required-star">*</span>
+                </label>
+                <textarea id="sbAnonKey" rows="3" placeholder="Contoh: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." required></textarea>
+                <span class="form-field-hint">Dapat ditemukan di Supabase: Project Settings &gt; API &gt; anon public key</span>
+              </div>
+
+              <div class="form-action-buttons-group">
+                <button type="submit" class="btn btn-primary btn-lg" id="btnSaveSupabase">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                  </svg>
+                  <span>Simpan &amp; Hubungkan</span>
+                </button>
+
+                <button type="button" class="btn btn-outline" id="btnTestSupabaseConn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                  </svg>
+                  <span>Tes Koneksi</span>
+                </button>
+
+                <button type="button" class="btn btn-outline-danger" id="btnClearSupabaseConn" title="Putus koneksi dan kembali ke mode penyimpanan lokal browser">
+                  <span>Putus Koneksi</span>
+                </button>
+              </div>
+            </form>
+
+            <!-- Sync / Migration Card -->
+            <div class="dash-card-subbox">
+              <h3 class="subbox-title">Migrasi Data Armada ke Supabase</h3>
+              <p class="subbox-desc">Unggah seluruh unit mobil dan pengaturan stok lokal saat ini langsung ke tabel <code>cars</code> di Supabase dengan sekali klik.</p>
+              <button type="button" class="btn btn-secondary btn-block" id="btnMigrateToSupabase">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+                  <polyline points="17 1 21 5 17 9"></polyline>
+                  <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                  <polyline points="7 23 3 19 7 15"></polyline>
+                  <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+                </svg>
+                <span>Sinkronkan Armada Lokal ke Supabase Cloud</span>
+              </button>
+            </div>
+          </section>
+
+          <!-- Right: SQL Schema & Quick Guide -->
+          <section class="dash-card">
+            <div class="dash-card-header dash-card-header-split">
+              <div class="dash-card-title-group">
+                <div class="icon-circle icon-circle-purple">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="16 18 22 12 16 6"></polyline>
+                    <polyline points="8 6 2 12 8 18"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="dash-card-title">Skrip SQL Tabel Database</h2>
+                  <p class="dash-card-desc">Jalankan di SQL Editor Supabase untuk membuat tabel dan RLS.</p>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-sm btn-outline" id="btnCopySql">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-icon">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span>Salin Skrip SQL</span>
+              </button>
+            </div>
+
+            <div class="dash-preview-content">
+              <div class="sql-guide-steps">
+                <h4>Cara Setup Supabase dalam 1 Menit:</h4>
+                <ol>
+                  <li>Buka proyek di <strong>Supabase Dashboard</strong>.</li>
+                  <li>Buka menu <strong>SQL Editor</strong> &gt; buat kueri baru (<em>New query</em>).</li>
+                  <li>Tempel skrip SQL di bawah lalu klik tombol <strong>Run</strong>.</li>
+                  <li>Salin <strong>URL</strong> &amp; <strong>anon key</strong> ke form di sebelah kiri.</li>
+                </ol>
+              </div>
+
+              <div class="sql-code-box">
+                <pre><code id="sqlSchemaPreview">-- Skrip Tabel cars & RLS AutoRent
+CREATE TABLE IF NOT EXISTS public.cars (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  category TEXT NOT NULL,
+  price BIGINT NOT NULL,
+  transmission TEXT DEFAULT 'Matic / Manual',
+  capacity TEXT DEFAULT '7 Penumpang',
+  stock INTEGER DEFAULT 3 CHECK (stock >= 0),
+  badge TEXT DEFAULT 'Tersedia',
+  image TEXT DEFAULT '',
+  description TEXT DEFAULT '',
+  is_custom BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE public.cars ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public read cars" 
+ON public.cars FOR SELECT TO anon, authenticated USING (true);
+
+CREATE POLICY "Allow update cars" 
+ON public.cars FOR UPDATE TO anon, authenticated USING (true);</code></pre>
+              </div>
+
+              <div class="preview-summary-box">
+                <h4 class="summary-box-title">Keunggulan Mode Supabase:</h4>
+                <ul class="summary-checklist">
+                  <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span><strong>Database Cloud Realtime:</strong> Perubahan stok mobil langsung tersinkron ke semua pengunjung di perangkat manapun.</span>
+                  </li>
+                  <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span><strong>Auto Fallback Offline:</strong> Jika kuota atau koneksi Supabase terputus, website otomatis menggunakan data lokal tanpa error.</span>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </section>
+
+        </div>
+      </div>
+      <!-- END PANE 3 -->
+
     </div>
   </main>
 
@@ -641,6 +845,8 @@
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer"></div>
 
-  <script src="dashboard.js?v=1.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js?v=1.0"></script>
+  <script src="dashboard.js?v=1.2"></script>
 </body>
 </html>

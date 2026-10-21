@@ -209,6 +209,21 @@ document.addEventListener('DOMContentLoaded', () => {
           bookingStartDate.value = pickupDateTop.value;
         }
 
+        const carStock = btn.getAttribute('data-stock') || '3';
+        const modalStockText = document.getElementById('modalStockText');
+        const modalStockDot = document.getElementById('modalStockDot');
+
+        if (modalStockText) {
+          const numStock = parseInt(carStock, 10);
+          if (numStock <= 2) {
+            modalStockText.innerHTML = `Sisa Stok: <strong style="color: #d97706;">${numStock} Unit Tersedia (Segera Pesan!)</strong>`;
+            if (modalStockDot) modalStockDot.className = 'stock-indicator-dot dot-low';
+          } else {
+            modalStockText.innerHTML = `Sisa Stok: <strong>${numStock} Unit Tersedia</strong>`;
+            if (modalStockDot) modalStockDot.className = 'stock-indicator-dot';
+          }
+        }
+
         recalculateTotal();
 
         bookingModal.classList.add('active');
@@ -243,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (bookingService) bookingService.addEventListener('change', recalculateTotal);
   if (bookingDays) bookingDays.addEventListener('change', recalculateTotal);
 
-  // Form Submit to WhatsApp with Autotext (including Transmission)
+  // Form Submit to WhatsApp with Autotext (including Transmission & Stock Inquiry)
   if (modalBookingForm) {
     modalBookingForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -272,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (notes) {
         message += `- Lokasi Antar / Catatan: ${notes}\n`;
       }
-      message += `\nApakah unit ${car} (${transmission}) masih tersedia untuk jadwal tersebut? Mohon konfirmasinya. Terima kasih.`;
+      message += `\nApakah unit ${car} (${transmission}) masih ada stok untuk jadwal tersebut? Mohon konfirmasinya. Terima kasih.`;
 
       const profile = getCompanyProfile();
       const targetWA = profile.phoneWA || '6281376385456';
@@ -284,43 +299,71 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ========================================================
-  // 7. Render Custom Cars from LocalStorage (Managed via dashboard.html)
+  // 7. Render All Fleet Cars & Stock from Supabase / LocalStorage
   // ========================================================
-  const STORAGE_KEY = 'autorent_custom_cars';
-
-  function getCustomCars() {
-    try {
-      const data = localStorage.getItem(STORAGE_KEY);
-      return data ? JSON.parse(data) : [];
-    } catch (err) {
-      console.error('Failed to parse custom cars from localStorage', err);
-      return [];
-    }
-  }
-
-  // Render Custom Cars to DOM
-  function renderAllCustomCars() {
-    const customCars = getCustomCars();
-
-    // Remove any previously rendered custom cars to avoid duplication
-    document.querySelectorAll('.car-card-custom').forEach(el => el.remove());
-
+  async function renderAllFleetCars() {
     const carGrid = document.getElementById('carGrid');
     if (!carGrid) return;
 
-    customCars.forEach(car => {
+    let cars = [];
+    if (window.AutoRentDB && typeof window.AutoRentDB.getAllCars === 'function') {
+      try {
+        cars = await window.AutoRentDB.getAllCars();
+      } catch (err) {
+        console.error('Failed to get cars from AutoRentDB', err);
+      }
+    }
+
+    if (!cars || cars.length === 0) {
+      cars = window.AutoRentDB ? window.AutoRentDB.DEFAULT_FLEET : [];
+    }
+
+    carGrid.innerHTML = '';
+
+    cars.forEach(car => {
       const formattedPrice = Number(car.price).toLocaleString('id-ID');
       const categoryLabel = (car.category === 'city') ? 'City Car Kompak' : 
                             (car.category === 'suv') ? 'SUV & Premium' : 'MPV Keluarga';
+      const stock = (typeof car.stock === 'number') ? car.stock : 3;
+
+      let stockBadgeHtml = '';
+      let bookBtnHtml = '';
+
+      if (stock <= 0) {
+        stockBadgeHtml = `
+          <span class="car-stock-badge stock-empty" title="Unit ini sedang tidak tersedia">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+            Stok Habis
+          </span>
+        `;
+        bookBtnHtml = `<button class="btn btn-disabled btn-sm" disabled title="Unit ini sedang habis">Stok Habis</button>`;
+      } else if (stock <= 3) {
+        stockBadgeHtml = `
+          <span class="car-stock-badge stock-low" title="Sisa sedikit, segera lakukan reservasi">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            Sisa ${stock} Unit!
+          </span>
+        `;
+        bookBtnHtml = `<button class="btn btn-primary btn-sm btn-book" data-car="${car.name}" data-price="${formattedPrice}" data-transmission="${car.transmission || ''}" data-stock="${stock}">Pesan Unit</button>`;
+      } else {
+        stockBadgeHtml = `
+          <span class="car-stock-badge stock-available" title="Unit siap dipesan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Tersedia ${stock} Unit
+          </span>
+        `;
+        bookBtnHtml = `<button class="btn btn-primary btn-sm btn-book" data-car="${car.name}" data-price="${formattedPrice}" data-transmission="${car.transmission || ''}" data-stock="${stock}">Pesan Unit</button>`;
+      }
 
       const card = document.createElement('article');
-      card.className = 'car-card car-card-custom';
+      card.className = `car-card ${car.isCustom ? 'car-card-custom' : ''}`;
       card.setAttribute('data-category', car.category);
       card.setAttribute('data-car-id', car.id);
 
       card.innerHTML = `
         <div class="car-thumb">
           <img src="${car.image}" alt="${car.name}" loading="lazy" onerror="this.src='Asset/Silver Toyota Avanza Cityscape Showcase.png'">
+          ${stockBadgeHtml}
           <span class="badge-status">${car.badge || 'Tersedia'}</span>
         </div>
         <div class="car-details">
@@ -352,7 +395,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <span class="price-val">Rp ${formattedPrice}</span>
               <span class="price-unit">/ 24 jam</span>
             </div>
-            <button class="btn btn-primary btn-sm btn-book" data-car="${car.name}" data-price="${formattedPrice}" data-transmission="${car.transmission || ''}">Pesan Unit</button>
+            ${bookBtnHtml}
           </div>
         </div>
       `;
@@ -360,7 +403,6 @@ document.addEventListener('DOMContentLoaded', () => {
       carGrid.appendChild(card);
     });
 
-    // Re-bind booking buttons & apply current active filter
     bindBookingButtons();
 
     const activePill = document.querySelector('#fleetFilterPills .pill.active');
@@ -419,15 +461,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Initial runs
-  renderAllCustomCars();
+  renderAllFleetCars();
   applyCompanyProfile();
 
-  // Listen to cross-tab storage changes (if admin edits cars or contact in dashboard.html!)
+  // Listen to cross-tab storage changes and custom database events
   window.addEventListener('storage', (e) => {
-    if (e.key === STORAGE_KEY) {
-      renderAllCustomCars();
-    } else if (e.key === PROFILE_KEY) {
+    if (e.key === 'autorent_custom_cars' || e.key === 'autorent_fleet_stocks' || e.key === 'autorent_supabase_url') {
+      renderAllFleetCars();
+    } else if (e.key === 'autorent_company_profile') {
       applyCompanyProfile();
     }
+  });
+
+  window.addEventListener('autorent:db_change', () => {
+    renderAllFleetCars();
   });
 });
